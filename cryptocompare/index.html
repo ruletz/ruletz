@@ -1,0 +1,1655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="google-site-verification" content="UGGZKFXyHXj-9oy6HIMZ6DlxGGCZqAnr6o6_HTat_OE" />
+    <meta name="description" content="A direct raw and critical approach at finding the best cryptocurrencies.Discover speed, fees, energy efficiency, decentralization, security, ecosystem accessibility, and make the best decisions.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Technical Comparison</title>
+    <style>
+        body {
+            background-color: #0A0718; /* Dark background */
+            color: #DFDEDA; /* Default font color */
+            font-family: Inter, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Title Styling */
+        h1 {
+            color: #B2B2B2;
+            font-size: 12px;
+            margin: 12px 0;
+            text-align: left;
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0 12px 13px 0; /* Space around the table */
+        }
+
+        td, th {
+            padding: 8px 15px; /* Adjust padding for better spacing */
+        }
+
+        td {
+            font-size: 13px;
+        }
+
+        /* Header Styling */
+        th {
+            white-space: nowrap;
+            text-align: left;
+            font-size: 12px;
+            color: #DFDEDA; /* Default font color for table text */
+            margin: 0 0 0 30px, 
+            border-bottom: 2px solid #1D1C20; /* Subtle row separator */
+        }
+
+        /* Row Styling */
+        tr {
+            padding: 8px 15px;
+            background-color: #121019; /* Alternate row color */
+            border-bottom: 2px;
+        }
+
+        /* Comment Column Styling */
+        .comment {
+            color: #4C4959; /* Subtle font color for comments */
+            white-space: nowrap; /* Keep comments on one line */
+            overflow: hidden;
+            text-overflow: ellipsis; /* Add ellipsis for long comments */
+        }
+
+        /* Marquee Style */
+        marquee {
+            background-color: #0A0718; /* Matches body background */
+            color: #C4C4C2;
+            font-size: 14px;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000; /* Keep above everything */
+            text-align: center;
+        }
+
+        /* Logo Style */
+        img {
+            max-height: 40px;
+            margin: 0 auto;
+            display: block;
+        }
+
+        /* Whitepaper Links */
+        a {
+            color: #C4C4C2; /* Matches table header color */
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline; /* Underline on hover */
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <thread>
+            <h1>Cryptocurrency Technical Comparison</h1>
+                <th>Logo</th>
+                <th>Cryptocurrency</th>
+                <th onclick="sortTable(2)">TPS</th>
+                <th onclick="sortTable(3)">Max Recorded TPS</th>
+                <th onclick="sortTable(4)">Max Theoretical TPS</th>
+                <th onclick="sortTable(5)">Fees (Coin/Byte)</th>
+                <th onclick="sortTable(6)">Energy</th>
+                <th onclick="sortTable(7)">Finality Time(secs)</th>
+                <th onclick="sortTable(8)">Fault Tolerance</th>
+                <th onclick="sortTable(9)">Validators/Hashrate</th>
+                <th onclick="sortTable(10)">Accessibility Score</th>
+                <th onclick="sortTable(11)">Protection Score</th>
+                <th>Source</th>
+                <th>Comment</th>
+                <th onclick="sortTable(14)">Price</th>
+                <th onclick="sortTable(15)">PriceDiscrepancy</th>
+                <!-- <th class="score-column">Score</th> -->
+        </thread>
+        <tbody id="cryptoTableBody">
+            <!-- Table rows will be dynamically populated here? -->
+        </tbody>
+    </table>
+
+        <marquee behavior="scroll" direction="left">BTC bc1q36n94pdekr09xddu9mcjn5nz9hnmssymc7l4u8 ETH 0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88 ETH  IOTA iota1qq44gsvex8xmz62z3zfvncfnn7d276nw5watgejm4ug7dsavq9w97g70f9h SOL 9qZnYjxcHBuopWpBiXY4wg3cq9gTmmJhHaKfQV7Hpsvo LTC LVkFjzF9mxMyB643d9d3zZKQvJy2x98Dnj OP 0x18402370a5dc2ffe331d48f698f4f86a88d4d216 XRP rUignFTSUkdKvvH7Q2edMPrCVh1XnzFQLa 1INCH ETH 0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88 AVA 0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88 TUSD ETH 0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88 ETH OP 0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88 FTM 0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88 TRON TWEFe8JsNTXKbspAcxoHoygJWxm1WgkqKD TUSD SOL 9qZnYjxcHBuopWpBiXY4wg3cq9gTmmJhHaKfQV7Hpsvo ADA addr1qy0c40773tkd968j6u7307v7xzcc0hmq8n5e38g8p9k8s0ql32laazhv6t5094eazlueuv93sl0kq08fnzwswztv0q7qz7py2k LINK ETH 0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88 DOGE DBZY5q9BzVyZtXhgngfWNg2MWmGrgTMm57 DOT 15S9FNY46TDFc8pb3ydX1jjmtB2obFur73av1BVTNQUMABv6 BCH qzuecqfu562v9fwrvrfm57erxe3lhp0nyqj4mzcfnl DAI OP 0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88 RNDR SOL 9qZnYjxcHBuopWpBiXY4wg3cq9gTmmJhHaKfQV7Hpsvo XLM GBZKZNPUKV3S35UGJFXQGFBHHUPBBB6WGFMVMBK2XYOUZW67XT4AYMS5 XMR 48ujpjz2X7C1ZVV2E62vz5XuRyTaQxVNgUGSBFCovrYzKYSwbCyfHacDwSchLnME3k7id1Hu5PYpYEj5w1BzRAkKALy3QhJ BONK SOL 9qZnYjxcHBuopWpBiXY4wg3cq9gTmmJhHaKfQV7Hpsvo MATIC 0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88 USDC ETH 0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88 SOURCE CONSENSUS CHATGPT CONTACT CRYPTOCOMPARE@RULETZ.COM</marquee>
+
+
+    <script>
+        let data = [
+   {
+      "logo":"https://cryptologos.cc/logos/bitcoin-btc-logo.png",
+      "name":"Bitcoin",
+      "tps":7,
+      "maxRecordedTps":7,
+      "maxTheoreticalTps":10,
+      "fees":"3-15 satoshis/byte",
+      "energy":"707 kWh per transaction",
+      "finality":"60 min",
+      "faultTolerance":"51%",
+      "validatorsHashrate":"160 EH/s",
+      "whitepaper":"https://bitcoin.org/bitcoin.pdf",
+      "comment":"Bitcoin is the first and most popular cryptocurrency, known for its decentralized ledger and security through Proof of Work.",
+      "protectedAgainstAttacks":"19 out of 27",
+      "accessibilityScore":"0.83",
+      "price":"96642.00"
+   },
+   {
+      "logo":"https://cryptologos.cc/logos/ethereum-eth-logo.png",
+      "name":"Ethereum",
+      "tps":30,
+      "maxRecordedTps":30,
+      "maxTheoreticalTps":"100,000+ (after Ethereum 2.0 upgrades)",
+      "fees":"30-100 gwei/byte",
+      "energy":"0.03 kWh per transaction",
+      "finality":"6-12 min",
+      "faultTolerance":"51%",
+      "validatorsHashrate":"N/A (Proof of Stake)",
+      "whitepaper":"https://ethereum.org/en/whitepaper/",
+      "comment":"Ethereum enables smart contracts and decentralized applications, recently shifting to Proof of Stake for energy efficiency.",
+      "protectedAgainstAttacks":"18 out of 27",
+      "accessibilityScore":"0.95",
+      "price":"3337.12"
+   },
+   {
+      "logo":"https://cryptologos.cc/logos/xrp-xrp-logo.png",
+      "name":"XRP",
+      "tps":1500,
+      "maxRecordedTps":1500,
+      "maxTheoreticalTps":1500,
+      "fees":"0.00001 XRP/byte",
+      "energy":"0.001 kWh per transaction",
+      "finality":"3 sec",
+      "faultTolerance":"67%",
+      "validatorsHashrate":"N/A",
+      "whitepaper":"https://ripple.com/wp-content/uploads/2020/01/ripple-consensus-algorithm-2020.pdf",
+      "comment":"XRP aims to facilitate fast and cheap cross-border transactions, prioritizing speed.",
+      "protectedAgainstAttacks":"20 out of 27",
+      "accessibilityScore":"0.76",
+      "price":"1.39"
+   },
+   {
+      "logo":"https://cryptologos.cc/logos/solana-sol-logo.png",
+      "name":"Solana",
+      "tps":"3,000-65,000",
+      "maxRecordedTps":"65,000",
+      "maxTheoreticalTps":"710,000",
+      "fees":"0.00025 SOL/byte",
+      "energy":"0.00051 kWh per transaction",
+      "finality":"2-3 sec",
+      "faultTolerance":"33%",
+      "validatorsHashrate":"N/A",
+      "whitepaper":"https://solana.com/solana-whitepaper.pdf",
+      "comment":"Solana focuses on scalability and fast transactions, making it ideal for decentralized finance (DeFi) and NFT projects.",
+      "protectedAgainstAttacks":"15 out of 27",
+      "accessibilityScore":"0.78",
+      "price":"250.43"
+   },
+   {
+      "logo":"https://cryptologos.cc/logos/binance-coin-bnb-logo.png",
+      "name":"Binance Coin (BNB)",
+      "tps":55,
+      "maxRecordedTps":55,
+      "maxTheoreticalTps":"100",
+      "fees":"5-20 gwei/byte",
+      "energy":"0.05 kWh per transaction",
+      "finality":"1 sec",
+      "faultTolerance":"33%",
+      "validatorsHashrate":"N/A",
+      "whitepaper":"https://www.binance.org/en/whitepaper",
+      "comment":"BNB powers the Binance Smart Chain, enabling fast transactions and smart contract execution.",
+      "protectedAgainstAttacks":"17 out of 27",
+      "accessibilityScore":"0.86",
+      "price":"655.73"
+   },
+   {
+      "logo":"https://cryptologos.cc/logos/usd-coin-usdc-logo.png",
+      "name":"USD Coin (USDC)",
+      "tps":"1,000-10,000",
+      "maxRecordedTps":"10,000",
+      "maxTheoreticalTps":"100,000+",
+      "fees":"15-100 gwei/byte",
+      "energy":"0.03-0.05 kWh per transaction",
+      "finality":"6-12 min",
+      "faultTolerance":"51%",
+      "validatorsHashrate":"N/A",
+      "whitepaper":"https://www.centre.io/pdfs/centre-whitepaper.pdf",
+      "comment":"USDC is a stablecoin on various chains, used widely for decentralized transactions.",
+      "protectedAgainstAttacks":"Ethereum's values: 18 out of 27",
+      "accessibilityScore":"0.91",
+      "price":"0.9999"
+   },
+   {
+      "logo":"https://cryptologos.cc/logos/dogecoin-doge-logo.png",
+      "name":"Dogecoin (DOGE)",
+      "tps":30,
+      "maxRecordedTps":30,
+      "maxTheoreticalTps":40,
+      "fees":"1 DOGE/byte",
+      "energy":"0.12 kWh per transaction",
+      "finality":"6 min",
+      "faultTolerance":"51%",
+      "validatorsHashrate":"500 TH/s",
+      "whitepaper":"https://dogecoin.com/whitepaper.pdf",
+      "comment":"Originally a meme coin, Dogecoin has become widely used for tipping and micropayments.",
+      "protectedAgainstAttacks":"14 out of 27",
+      "accessibilityScore":"0.67",
+      "price":"0.4193"
+   },
+   {
+      "logo":"https://cryptologos.cc/logos/cardano-ada-logo.png",
+      "name":"Cardano (ADA)",
+      "tps":250,
+      "maxRecordedTps":250,
+      "maxTheoreticalTps":"1,000+ (with Hydra upgrades)",
+      "fees":"0.17 ADA/byte",
+      "energy":"0.00003 kWh per transaction",
+      "finality":"5-10 min",
+      "faultTolerance":"51%",
+      "validatorsHashrate":"N/A (Proof of Stake)",
+      "whitepaper":"https://cardano.org/whitepaper/",
+      "comment":"Cardano emphasizes sustainability, security, and scalability through its Proof of Stake system.",
+      "protectedAgainstAttacks":"18 out of 27",
+      "accessibilityScore":"0.72",
+      "price":"0.9908"
+   },
+   {
+      "logo":"https://cryptologos.cc/logos/tron-trx-logo.png",
+      "name":"TRON (TRX)",
+      "tps":"2,000",
+      "maxRecordedTps":"2,000",
+      "maxTheoreticalTps":"10,000",
+      "fees":"0.00001 TRX/byte",
+      "energy":"0.001 kWh per transaction",
+      "finality":"3 sec",
+      "faultTolerance":"33%",
+      "validatorsHashrate":"N/A",
+      "whitepaper":"https://tron.network/static/doc/white_paper_v_2_0.pdf",
+      "comment":"TRON is focused on decentralized content sharing and scalable, low-cost transactions.",
+      "protectedAgainstAttacks":"19 out of 27",
+      "accessibilityScore":"0.76",
+      "price":"0.2056"
+   },
+   {
+      "logo":"https://cryptologos.cc/logos/toncoin-ton-logo.png",
+      "name":"Toncoin (TON)",
+      "tps":"55,000",
+      "maxRecordedTps":"55,000",
+      "maxTheoreticalTps":"1,000,000",
+      "fees":"0.000002 TON/byte",
+      "energy":"0.00002 kWh per transaction",
+      "finality":"2 sec",
+      "faultTolerance":"33%",
+      "validatorsHashrate":"N/A",
+      "whitepaper":"https://ton.org/ton.pdf",
+      "comment":"TON aims to deliver ultra-fast, low-fee transactions, built on a multi-chain architecture.",
+      "protectedAgainstAttacks":"17 out of 27",
+      "accessibilityScore":"0.63",
+      "price":"6.06"
+   },
+   {
+      "logo":"https://cryptologos.cc/logos/avalanche-avax-logo.png",
+      "name":"Avalanche (AVAX)",
+      "tps":"4,500",
+      "maxRecordedTps":"4,500",
+      "maxTheoreticalTps":"4,500",
+      "fees":"0.0001 AVAX/byte",
+      "energy":"0.0005 kWh per transaction",
+      "finality":"2 sec",
+      "faultTolerance":"33%",
+      "validatorsHashrate":"N/A",
+      "whitepaper":"https://www.avalabs.org/whitepapers",
+      "comment":"Avalanche is known for its high throughput and low transaction fees, ideal for DeFi and enterprise use.",
+      "protectedAgainstAttacks":"20 out of 27",
+      "accessibilityScore":"0.79",
+      "price":"40.10"
+   },
+   {
+      "logo":"https://cryptologos.cc/logos/shiba-inu-shib-logo.png",
+      "name":"Shiba Inu (SHIB)",
+      "tps":"30",
+      "maxRecordedTps":"30",
+      "maxTheoreticalTps":"100,000+ (after Ethereum 2.0 upgrades)",
+      "fees":"30-100 gwei/byte (Ethereum-based)",
+      "energy":"0.03 kWh per transaction",
+      "finality":"6-12 min",
+      "faultTolerance":"51%",
+      "validatorsHashrate":"N/A (Ethereum Proof of Stake)",
+      "whitepaper":"https://shibatoken.com/woofpaper",
+      "comment":"Shiba Inu started as a meme token on Ethereum and has gained a large community with DeFi integrations.",
+      "protectedAgainstAttacks":"18 out of 27",
+      "accessibilityScore":"0.62",
+      "price":"0.00002498"
+   },
+   {
+      "logo":"https://cryptologos.cc/logos/chainlink-link-logo.png",
+      "name":"Chainlink (LINK)",
+      "tps":"30",
+      "maxRecordedTps":"30",
+      "maxTheoreticalTps":"100,000+ (after Ethereum 2.0 upgrades)",
+      "fees":"30-100 gwei/byte (Ethereum-based)",
+      "energy":"0.03 kWh per transaction",
+      "finality":"6-12 min (Ethereum-based)",
+      "faultTolerance":"51%",
+      "validatorsHashrate":"N/A (Ethereum Proof of Stake)",
+      "whitepaper":"https://chain.link/whitepaper",
+      "comment":"Chainlink connects smart contracts with real-world data, enabling oracles to provide off-chain information.",
+      "protectedAgainstAttacks":"18 out of 27",
+      "accessibilityScore":"0.78",
+      "price":"17.11"
+   },
+   {
+      "logo":"https://cryptologos.cc/logos/bitcoin-cash-bch-logo.png",
+      "name":"Bitcoin Cash (BCH)",
+      "tps":116,
+      "maxRecordedTps":116,
+      "maxTheoreticalTps":200,
+      "fees":"0.05-0.20 satoshis/byte",
+      "energy":"96 kWh per transaction",
+      "finality":"30-60 min",
+      "faultTolerance":"51%",
+      "validatorsHashrate":"2.1 EH/s",
+      "whitepaper":"https://www.bitcoincash.org/bitcoin.pdf",
+      "comment":"Bitcoin Cash focuses on faster and cheaper transactions than Bitcoin, with larger block sizes.",
+      "protectedAgainstAttacks":"17 out of 27",
+      "accessibilityScore":"0.7",
+      "price":"502.90"
+   },
+   {
+      "logo":"https://cryptologos.cc/logos/polkadot-new-dot-logo.png?v=035",
+      "name":"Polkadot (DOT)",
+      "tps":"1,000",
+      "maxRecordedTps":"1,000",
+      "maxTheoreticalTps":"1,000,000 (with parachains)",
+      "fees":"0.0001 DOT/byte",
+      "energy":"0.0002 kWh per transaction",
+      "finality":"6-12 sec",
+      "faultTolerance":"51%",
+      "validatorsHashrate":"N/A (Proof of Stake)",
+      "whitepaper":"https://polkadot.network/PolkaDotPaper.pdf",
+      "comment":"Polkadot is known for interoperability between blockchains and scalable decentralized governance.",
+      "protectedAgainstAttacks":"21 out of 27",
+      "accessibilityScore":"0.78",
+      "price":"8.48"
+   },
+   {
+      "logo":"https://cryptologos.cc/logos/near-protocol-near-logo.png",
+      "name":"NEAR Protocol (NEAR)",
+      "tps":"100,000",
+      "maxRecordedTps":"100,000",
+      "maxTheoreticalTps":"100,000+ (sharding improvements)",
+      "fees":"0.00001 NEAR/byte",
+      "energy":"0.00022 kWh per transaction",
+      "finality":"1-2 sec",
+      "faultTolerance":"51%",
+      "validatorsHashrate":"N/A (Proof of Stake)",
+      "whitepaper":"https://near.org/papers/near-whitepaper/",
+      "comment":"NEAR is designed for high scalability with sharding, offering fast transactions and low fees.",
+      "protectedAgainstAttacks":"18 out of 27",
+      "accessibilityScore":"0.7",
+      "price":"6.58"
+   },
+   {
+      "logo":"https://cryptologos.cc/logos/sui-sui-logo.png",
+      "name":"Sui (SUI)",
+      "tps":"300,000",
+      "maxRecordedTps":"297,000",
+      "maxTheoreticalTps":"unknown (scalable with validators)",
+      "fees":"0.001 SUI/byte",
+      "energy":"0.00004 kWh per transaction",
+      "finality":"2-3 sec",
+      "faultTolerance":"33%",
+      "validatorsHashrate":"N/A (Proof of Stake)",
+      "whitepaper":"https://sui.io/sui-whitepaper.pdf",
+      "comment":"Sui is a highly scalable blockchain designed for fast and secure decentralized applications.",
+      "protectedAgainstAttacks":"16 out of 27",
+      "accessibilityScore":"0.6",
+      "price":"3.34"
+   },
+   {
+      "logo":"https://cryptologos.cc/logos/litecoin-ltc-logo.png",
+      "name":"Litecoin (LTC)",
+      "tps":56,
+      "maxRecordedTps":56,
+      "maxTheoreticalTps":56,
+      "fees":"0.0001-0.001 LTC/byte",
+      "energy":"18 kWh per transaction",
+      "finality":"30 min",
+      "faultTolerance":"51%",
+      "validatorsHashrate":"450 TH/s",
+      "whitepaper":"https://litecoin.org/litecoin-paper.pdf",
+      "comment":"Litecoin was created as a lighter and faster alternative to Bitcoin, with shorter block times and lower fees.",
+      "protectedAgainstAttacks":"16 out of 27",
+      "accessibilityScore":"0.72",
+      "price":"95.88"
+   },
+   {
+      "logo":"https://cryptologos.cc/logos/uniswap-uni-logo.png",
+      "name":"Uniswap (UNI)",
+      "tps":"30",
+      "maxRecordedTps":"30",
+      "maxTheoreticalTps":"100,000+",
+      "fees":"30-100 gwei/byte",
+      "energy":"0.03 kWh per transaction",
+      "finality":"6-12 min",
+      "faultTolerance":"51%",
+      "validatorsHashrate":"N/A (Ethereum Proof of Stake)",
+      "whitepaper":"https://uniswap.org/whitepaper.pdf",
+      "comment":"Uniswap is a decentralized exchange (DEX) built on Ethereum, facilitating ERC-20 token swaps without intermediaries.",
+      "protectedAgainstAttacks":"18 out of 27",
+      "accessibilityScore":"0.81",
+      "price":"10.48"
+   },
+   {
+      "logo":"https://cryptologos.cc/logos/aptos-apt-logo.png",
+      "name":"Aptos (APT)",
+      "tps":"160,000",
+      "maxRecordedTps":"160,000",
+      "maxTheoreticalTps":"160,000+",
+      "fees":"0.00005 APT/byte",
+      "energy":"0.00005 kWh per transaction",
+      "finality":"1 sec",
+      "faultTolerance":"33%",
+      "validatorsHashrate":"N/A (Proof of Stake)",
+      "whitepaper":"https://aptos.dev/aptos-whitepaper.pdf",
+      "comment":"Aptos is a scalable blockchain designed for high throughput, targeting decentralized applications.",
+      "protectedAgainstAttacks":"17 out of 27",
+      "accessibilityScore":"0.64",
+      "price":"12.02"
+   },
+   {
+      "logo":"https://cryptologos.cc/logos/internet-computer-icp-logo.png",
+      "name":"Internet Computer (ICP)",
+      "tps":"11,500",
+      "maxRecordedTps":"11,500",
+      "maxTheoreticalTps":"250,000",
+      "fees":"0.0001 ICP/byte",
+      "energy":"0.00002 kWh per transaction",
+      "finality":"1-5 sec",
+      "faultTolerance":"33%",
+      "validatorsHashrate":"N/A (Consensus-based)",
+      "whitepaper":"https://dfinity.org/pdf-viewer/library/dfinity-consensus.pdf",
+      "comment":"Internet Computer aims to create a decentralized internet, running websites and applications directly on the blockchain.",
+      "protectedAgainstAttacks":"19 out of 27",
+      "accessibilityScore":"0.59",
+      "price":"11.00"
+   },
+   {
+      "logo":"https://cryptologos.cc/logos/kaspa-kas-logo.png",
+      "name":"Kaspa (KAS)",
+      "tps":100,
+      "maxRecordedTps":100,
+      "maxTheoreticalTps":"400 (1 bps blockDAG)",
+      "fees":"0.0001 KAS/byte",
+      "energy":"0.001 kWh per transaction",
+      "finality":"1 sec",
+      "faultTolerance":"51%",
+      "validatorsHashrate":"150 TH/s",
+      "whitepaper":"https://kaspa.org/whitepaper.pdf",
+      "comment":"Kaspa uses a blockDAG structure for high throughput and fast block finality, making it scalable.",
+      "protectedAgainstAttacks":"20 out of 27",
+      "accessibilityScore":"0.53",
+      "price":"0.15"
+   },
+   {
+      "logo":"https://cryptologos.cc/logos/monero-xmr-logo.png",
+      "name":"Monero (XMR)",
+      "tps":"1,000",
+      "maxRecordedTps":"1,000",
+      "maxTheoreticalTps":"1,700",
+      "fees":"0.00002 XMR/byte",
+      "energy":"0.0015 kWh per transaction",
+      "finality":"2 min",
+      "faultTolerance":"51%",
+      "validatorsHashrate":"2.9 GH/s",
+      "whitepaper":"https://www.getmonero.org/resources/research-lab/whitepaper.pdf",
+      "comment":"Monero is focused on privacy, with untraceable transactions using ring signatures and stealth addresses.",
+      "protectedAgainstAttacks":"22 out of 27",
+      "accessibilityScore":"0.59",
+      "price":"161.08"
+   },
+   {
+      "logo":"https://altcoinsbox.com/wp-content/uploads/2023/03/render-token-logo.svg",
+      "name":"Render Token (RNDR)",
+      "tps":"30",
+      "maxRecordedTps":"30",
+      "maxTheoreticalTps":"100,000+",
+      "fees":"30-100 gwei/byte (Ethereum-based)",
+      "energy":"0.03 kWh per transaction",
+      "finality":"6-12 min",
+      "faultTolerance":"51%",
+      "validatorsHashrate":"N/A (Ethereum Proof of Stake)",
+      "whitepaper":"https://rendertoken.com/resources/Render_WhitePaper_v1_2.pdf",
+      "comment":"Render Token provides decentralized GPU rendering services, allowing users to monetize idle GPU power on Ethereum.",
+      "protectedAgainstAttacks":"18 out of 27",
+      "accessibilityScore":"0.58",
+      "price":"7.61"
+   },
+   {
+      "logo":"https://cryptologos.cc/logos/ethereum-classic-etc-logo.png",
+      "name":"Ethereum Classic (ETC)",
+      "tps":15,
+      "maxRecordedTps":15,
+      "maxTheoreticalTps":15,
+      "fees":"0.001-0.01 ETC/byte",
+      "energy":"45 kWh per transaction",
+      "finality":"30-60 min",
+      "faultTolerance":"51%",
+      "validatorsHashrate":"25 TH/s",
+      "whitepaper":"https://ethereumclassic.org/whitepaper",
+      "comment":"Ethereum Classic continues to operate on the original Ethereum blockchain, focusing on immutability.",
+      "protectedAgainstAttacks":"16 out of 27",
+      "accessibilityScore":"0.69",
+      "price":"28.01"
+   },
+   {
+      "logo":"https://cryptologos.cc/logos/stacks-stx-logo.png",
+      "name":"Stacks (STX)",
+      "tps":300,
+      "maxRecordedTps":300,
+      "maxTheoreticalTps":300,
+      "fees":"0.00001 STX/byte",
+      "energy":"0.0002 kWh per transaction",
+      "finality":"10 min",
+      "faultTolerance":"51%",
+      "validatorsHashrate":"N/A (uses Bitcoin for finality)",
+      "whitepaper":"https://stacks.org/whitepaper.pdf",
+      "comment":"Stacks brings smart contracts and dApps to Bitcoin, using Bitcoin for finality and security.",
+      "protectedAgainstAttacks":"19 out of 27",
+      "accessibilityScore":"0.62",
+      "price":"1.96"
+   },
+   {
+      "logo":"https://cryptologos.cc/logos/hedera-hbar-logo.png",
+      "name":"Hedera (HBAR)",
+      "tps":"10,000",
+      "maxRecordedTps":"10,000",
+      "maxTheoreticalTps":"100,000+ (with sharding improvements)",
+      "fees":"0.0001 HBAR/byte",
+      "energy":"0.000017 kWh per transaction",
+      "finality":"3-5 sec",
+      "faultTolerance":"67%",
+      "validatorsHashrate":"N/A (Proof of Stake, Hashgraph)",
+      "whitepaper":"https://hedera.com/whitepaper",
+      "comment":"Hedera uses a Hashgraph consensus for high throughput, security, and low fees, focusing on enterprise use cases.",
+      "protectedAgainstAttacks":"21 out of 27",
+      "accessibilityScore":"0.66",
+      "price":"0.14"
+   },
+   {
+      "logo":"https://cryptologos.cc/logos/arweave-ar-logo.png",
+      "name":"Arweave (AR)",
+      "tps":30,
+      "maxRecordedTps":30,
+      "maxTheoreticalTps":100,
+      "fees":"0.001 AR/byte",
+      "energy":"0.0001 kWh per transaction",
+      "finality":"2 sec",
+      "faultTolerance":"51%",
+      "validatorsHashrate":"N/A (Proof of Access)",
+      "whitepaper":"https://www.arweave.org/yellow-paper.pdf",
+      "comment":"Arweave focuses on permanent data storage using a unique Proof of Access consensus mechanism.",
+      "protectedAgainstAttacks":"18 out of 27",
+      "accessibilityScore":"0.6",
+      "price":"21.01"
+   },
+   {
+      "logo":"https://cryptologos.cc/logos/aave-aave-logo.png",
+      "name":"Aave (AAVE)",
+      "tps":"30",
+      "maxRecordedTps":"30",
+      "maxTheoreticalTps":"100,000+ (after Ethereum 2.0 upgrades)",
+      "fees":"30-100 gwei/byte",
+      "energy":"0.03 kWh per transaction",
+      "finality":"6-12 min (Ethereum-based)",
+      "faultTolerance":"51%",
+      "validatorsHashrate":"N/A (Proof of Stake)",
+      "whitepaper":"https://aave.com/whitepaper/",
+      "comment":"Aave is a decentralized finance protocol for lending and borrowing assets on Ethereum.",
+      "protectedAgainstAttacks":"18 out of 27",
+      "accessibilityScore":"0.78",
+      "price":"167.10"
+   },
+   {
+      "logo":"https://cryptologos.cc/logos/filecoin-fil-logo.png",
+      "name":"Filecoin (FIL)",
+      "tps":150,
+      "maxRecordedTps":150,
+      "maxTheoreticalTps":450,
+      "fees":"0.0005 FIL/byte",
+      "energy":"0.01 kWh per transaction",
+      "finality":"1 min",
+      "faultTolerance":"51%",
+      "validatorsHashrate":"N/A",
+      "whitepaper":"https://filecoin.io/filecoin.pdf",
+      "comment":"Filecoin is a decentralized storage network aimed at providing distributed file storage through a blockchain economy.",
+      "protectedAgainstAttacks":"17 out of 27",
+      "accessibilityScore":"0.69",
+      "price":"5.48"
+   },
+   {
+      "logo":"https://cryptologos.cc/logos/optimism-ethereum-op-logo.png",
+      "name":"Optimism (OP)",
+      "tps":"30 (Layer 2 solution on Ethereum)",
+      "maxRecordedTps":"30",
+      "maxTheoreticalTps":"100,000+",
+      "fees":"5-15 gwei/byte (Ethereum-based)",
+      "energy":"0.03 kWh per transaction (Layer 2, Ethereum-based)",
+      "finality":"6-12 min",
+      "faultTolerance":"51%",
+      "validatorsHashrate":"N/A (Ethereum Proof of Stake)",
+      "whitepaper":"https://optimism.io/whitepaper",
+      "comment":"Optimism is a Layer 2 scaling solution for Ethereum, improving transaction throughput and reducing fees.",
+      "protectedAgainstAttacks":"18 out of 27",
+      "accessibilityScore":"0.72",
+      "price":"2.17"
+   },
+   {
+      "logo":"https://cryptologos.cc/logos/fantom-ftm-logo.png",
+      "name":"Fantom (FTM)",
+      "tps":"4,500",
+      "maxRecordedTps":"4,500",
+      "maxTheoreticalTps":"300,000 (with sharding and improvements)",
+      "fees":"0.0001 FTM/byte",
+      "energy":"0.0003 kWh per transaction",
+      "finality":"1-2 sec",
+      "faultTolerance":"33%",
+      "validatorsHashrate":"N/A (Proof of Stake, Lachesis consensus)",
+      "whitepaper":"https://fantom.foundation/whitepaper.pdf",
+      "comment":"Fantom is a highly scalable blockchain designed for fast, secure, and efficient transactions, ideal for DeFi.",
+      "protectedAgainstAttacks":"18 out of 27",
+      "accessibilityScore":"0.71",
+      "price":"0.98"
+   },
+   {
+      "logo":"https://res.coinpaper.com/coinpaper/vechain_vet_logo_dadd797d0b.png",
+      "name":"VeChain (VET)",
+      "tps":"10,000",
+      "maxRecordedTps":"10,000",
+      "maxTheoreticalTps":"100,000 (with improvements)",
+      "fees":"0.000042 VET/byte",
+      "energy":"0.000001 kWh per transaction",
+      "finality":"1 sec",
+      "faultTolerance":"33%",
+      "validatorsHashrate":"N/A (Proof of Authority)",
+      "whitepaper":"https://vechain.org/whitepaper.pdf",
+      "comment":"VeChain focuses on supply chain management and business processes through distributed ledger technology.",
+      "protectedAgainstAttacks":"19 out of 27",
+      "accessibilityScore":"0.62",
+      "price":"0.0402"
+   },
+   {
+      "logo":"https://cryptologos.cc/logos/cosmos-atom-logo.png",
+      "name":"Cosmos (ATOM)",
+      "tps":"10,000",
+      "maxRecordedTps":"10,000",
+      "maxTheoreticalTps":"100,000+ (with IBC scaling improvements)",
+      "fees":"0.0001 ATOM/byte",
+      "energy":"0.0001 kWh per transaction",
+      "finality":"6-7 sec",
+      "faultTolerance":"33%",
+      "validatorsHashrate":"N/A (Tendermint Proof of Stake)",
+      "whitepaper":"https://v1.cosmos.network/resources/whitepaper",
+      "comment":"Cosmos aims to create an Internet of Blockchains for cross-chain interoperability using its IBC protocol.",
+      "protectedAgainstAttacks":"21 out of 27",
+      "accessibilityScore":"0.77",
+      "price":"8.33"
+   },
+   {
+      "logo":"https://cryptologos.cc/logos/tezos-xtz-logo.png",
+      "name":"Tezos (XTZ)",
+      "tps":40,
+      "maxRecordedTps":40,
+      "maxTheoreticalTps":"1,000+ (with upgrades)",
+      "fees":"0.001-0.002 XTZ/byte",
+      "energy":"0.000005 kWh per transaction",
+      "finality":"30 sec",
+      "faultTolerance":"33%",
+      "validatorsHashrate":"N/A (Proof of Stake)",
+      "whitepaper":"https://tezos.com/whitepaper",
+      "comment":"Tezos is a self-amending blockchain with on-chain governance and upgradability for sustainability.",
+      "protectedAgainstAttacks":"19 out of 27",
+      "accessibilityScore":"0.69",
+      "price":"1.31"
+   },
+   {
+      "logo":"https://cryptologos.cc/logos/algorand-algo-logo.png",
+      "name":"Algorand (ALGO)",
+      "tps":"1,000",
+      "maxRecordedTps":"1,000",
+      "maxTheoreticalTps":"45,000 (with upgrades)",
+      "fees":"0.001 ALGO/byte",
+      "energy":"0.000008 kWh per transaction",
+      "finality":"4-5 sec",
+      "faultTolerance":"33%",
+      "validatorsHashrate":"N/A (Pure Proof of Stake)",
+      "whitepaper":"https://algorand.foundation/algorand-protocol-whitepaper",
+      "comment":"Algorand focuses on high speed, low fees, and scalability for decentralized applications and enterprises.",
+      "protectedAgainstAttacks":"20 out of 27",
+      "accessibilityScore":"0.7",
+      "price":"0.27"
+   },
+   {
+      "logo":"https://cryptologos.cc/logos/polygon-matic-logo.png",
+      "name":"Polygon (MATIC)",
+      "tps":"7,000-10,000",
+      "maxRecordedTps":"7,000",
+      "maxTheoreticalTps":"65,000 (with ZK-Rollup scaling)",
+      "fees":"0.00002 MATIC/byte",
+      "energy":"0.0002 kWh per transaction",
+      "finality":"1-2 sec",
+      "faultTolerance":"33%",
+      "validatorsHashrate":"N/A (Proof of Stake)",
+      "whitepaper":"https://polygon.technology/lightpaper-polygon.pdf",
+      "comment":"Polygon is a Layer 2 scaling solution for Ethereum, designed for high-speed, low-fee transactions.",
+      "protectedAgainstAttacks":"18 out of 27",
+      "accessibilityScore":"0.77",
+      "price":"0.5462"
+   },
+   {
+      "logo":"https://cryptologos.cc/logos/immutable-x-imx-logo.png",
+      "name":"Immutable X (IMX)",
+      "tps":"9,000+ (Layer 2 on Ethereum)",
+      "maxRecordedTps":"9,000",
+      "maxTheoreticalTps":"100,000+",
+      "fees":"0.00000 IMX/byte",
+      "energy":"0.000002 kWh per transaction",
+      "finality":"2 sec",
+      "faultTolerance":"51%",
+      "validatorsHashrate":"N/A (uses Ethereum's Proof of Stake for security)",
+      "whitepaper":"https://www.immutable.com/whitepaper",
+      "comment":"Immutable X is a Layer 2 scaling solution on Ethereum, focused on NFTs and gaming with zero gas fees.",
+      "protectedAgainstAttacks":"18 out of 27",
+      "accessibilityScore":"0.63",
+      "price":"1.66"
+   },
+   {
+      "logo":"https://cryptologos.cc/logos/pancakeswap-cake-logo.png",
+      "name":"PancakeSwap (CAKE)",
+      "tps":55,
+      "maxRecordedTps":55,
+      "maxTheoreticalTps":100,
+      "fees":"0.00001 BNB/byte (on Binance Smart Chain)",
+      "energy":"0.0005 kWh per transaction",
+      "finality":"1 sec",
+      "faultTolerance":"33%",
+      "validatorsHashrate":"N/A",
+      "whitepaper":"https://docs.pancakeswap.finance/",
+      "comment":"PancakeSwap is a decentralized exchange (DEX) on Binance Smart Chain, enabling fast and low-fee token swaps.",
+      "protectedAgainstAttacks":"17 out of 27",
+      "accessibilityScore":"0.69",
+      "price":"1.33"
+   },
+   {
+      "logo":"https://cryptologos.cc/logos/aave-aave-logo.png",
+      "name":"Aave (AAVE)",
+      "tps":30,
+      "maxRecordedTps":30,
+      "maxTheoreticalTps":"100,000+ (after Ethereum 2.0 upgrades)",
+      "fees":"30-100 gwei/byte",
+      "energy":"0.03 kWh per transaction",
+      "finality":"6-12 min",
+      "faultTolerance":"51%",
+      "validatorsHashrate":"N/A (Proof of Stake)",
+      "whitepaper":"https://aave.com/whitepaper/",
+      "comment":"Aave is a decentralized finance protocol for lending and borrowing assets on Ethereum.",
+      "protectedAgainstAttacks":"18 out of 27",
+      "accessibilityScore":"0.78"
+   },
+   {
+      "logo":"https://cryptologos.cc/logos/uniswap-uni-logo.png",
+      "name":"Uniswap (UNI)",
+      "tps":30,
+      "maxRecordedTps":30,
+      "maxTheoreticalTps":"100,000+ (after Ethereum 2.0 upgrades)",
+      "fees":"30-100 gwei/byte (Ethereum-based)",
+      "energy":"0.03 kWh per transaction",
+      "finality":"6-12 min (Ethereum-based)",
+      "faultTolerance":"51%",
+      "validatorsHashrate":"N/A (Ethereum Proof of Stake)",
+      "whitepaper":"https://uniswap.org/whitepaper.pdf",
+      "comment":"Uniswap is a decentralized exchange (DEX) built on Ethereum, facilitating ERC-20 token swaps without intermediaries.",
+      "protectedAgainstAttacks":"18 out of 27",
+      "accessibilityScore":"0.81"
+   },
+   {
+      "logo":"https://cryptologos.cc/logos/pepe-pepe-logo.png",
+      "name":"Pepe (PEPE)",
+      "tps":"15-30 (on Ethereum)",
+      "maxRecordedTps":"30",
+      "maxTheoreticalTps":"100,000+",
+      "fees":"15-50 gwei/byte",
+      "energy":"0.03 kWh per transaction",
+      "finality":"6-12 min (Ethereum-based)",
+      "faultTolerance":"51%",
+      "validatorsHashrate":"N/A (Ethereum Proof of Stake)",
+      "whitepaper":"https://pepetoken.com/",
+      "comment":"Pepe is a meme coin built on Ethereum, gaining popularity in online communities and trading.",
+      "protectedAgainstAttacks":"18 out of 27",
+      "accessibilityScore":"0.5",
+      "price":"0.00001966"
+   },
+   {
+      "logo":"https://cryptologos.cc/logos/shiba-inu-shib-logo.png",
+      "name":"Shiba Inu (SHIB)",
+      "tps":30,
+      "maxRecordedTps":30,
+      "maxTheoreticalTps":"100,000+ (after Ethereum 2.0 upgrades)",
+      "fees":"30-100 gwei/byte (Ethereum-based)",
+      "energy":"0.03 kWh per transaction (Ethereum-based)",
+      "finality":"6-12 min (Ethereum-based)",
+      "faultTolerance":"51%",
+      "validatorsHashrate":"N/A (Ethereum Proof of Stake)",
+      "whitepaper":"https://shibatoken.com/woofpaper",
+      "comment":"Shiba Inu started as a meme token on Ethereum and has gained a large community with DeFi integrations.",
+      "protectedAgainstAttacks":"18 out of 27",
+      "accessibilityScore":"0.62"
+   },
+   {
+      "logo":"https://cdn.icon-icons.com/icons2/2130/PNG/512/btt_cryptocurrency_logo_icon_131461.png",
+      "name":"BitTorrent (BTT)",
+      "tps":"2,000",
+      "maxRecordedTps":"2,000",
+      "maxTheoreticalTps":"10,000",
+      "fees":"0.00001 BTT/byte",
+      "energy":"0.001 kWh per transaction",
+      "finality":"2 sec",
+      "faultTolerance":"33%",
+      "validatorsHashrate":"N/A",
+      "whitepaper":"https://www.bittorrent.com/bttwhitepaper.pdf",
+      "comment":"BitTorrent Token (BTT) enables decentralized file sharing and payments on the TRON network.",
+      "protectedAgainstAttacks":"19 out of 27",
+      "accessibilityScore":"0.57",
+      "price":"0.00000071"
+   },
+   {
+      "logo":"https://cryptologos.cc/logos/maker-mkr-logo.png",
+      "name":"Maker (MKR)",
+      "tps":30,
+      "maxRecordedTps":30,
+      "maxTheoreticalTps":"100,000+ (after Ethereum 2.0 upgrades)",
+      "fees":"30-100 gwei/byte (Ethereum-based)",
+      "energy":"0.03 kWh per transaction",
+      "finality":"6-12 min (Ethereum-based)",
+      "faultTolerance":"51%",
+      "validatorsHashrate":"N/A (Ethereum Proof of Stake)",
+      "whitepaper":"https://makerdao.com/en/whitepaper",
+      "comment":"MakerDAO governs the stablecoin DAI, which is built on Ethereum, with MKR used for governance.",
+      "protectedAgainstAttacks":"18 out of 27",
+      "accessibilityScore":"0.78",
+      "price":"1723.70"
+   },
+   {
+      "logo":"https://cryptologos.cc/logos/theta-theta-logo.png",
+      "name":"Theta Network (THETA)",
+      "tps":"1,000",
+      "maxRecordedTps":"1,000",
+      "maxTheoreticalTps":"10,000",
+      "fees":"0.0001 THETA/byte",
+      "energy":"0.0005 kWh per transaction",
+      "finality":"1-2 sec",
+      "faultTolerance":"33%",
+      "validatorsHashrate":"N/A",
+      "whitepaper":"https://www.thetatoken.org/whitepaper",
+      "comment":"Theta Network is a decentralized streaming platform focused on video content and decentralized bandwidth sharing.",
+      "protectedAgainstAttacks":"18 out of 27",
+      "accessibilityScore":"0.62",
+      "price":"1.80"
+   },
+   {
+      "logo":"https://cryptologos.cc/logos/helium-hnt-logo.png",
+      "name":"Helium (HNT)",
+      "tps":150,
+      "maxRecordedTps":150,
+      "maxTheoreticalTps":"1,000",
+      "fees":"0.0001 HNT/byte",
+      "energy":"0.001 kWh per transaction",
+      "finality":"1-2 min",
+      "faultTolerance":"33%",
+      "validatorsHashrate":"N/A",
+      "whitepaper":"https://www.helium.com/whitepaper",
+      "comment":"Helium provides decentralized wireless infrastructure for IoT devices, incentivized by its native token HNT.",
+      "protectedAgainstAttacks":"19 out of 27",
+      "accessibilityScore":"0.57",
+      "price":"6.26"
+   },
+   {
+      "logo":"https://cryptologos.cc/logos/kucoin-token-kcs-logo.png",
+      "name":"KuCoin Token (KCS)",
+      "tps":"1,000",
+      "maxRecordedTps":"1,000",
+      "maxTheoreticalTps":"10,000",
+      "fees":"0.00002 KCS/byte",
+      "energy":"0.0001 kWh per transaction",
+      "finality":"3 sec",
+      "faultTolerance":"33%",
+      "validatorsHashrate":"N/A (Proof of Authority)",
+      "whitepaper":"https://www.kucoin.com/kcs-whitepaper",
+      "comment":"KuCoin Token powers the KuCoin Community Chain, providing benefits to holders, including trading fee discounts on KuCoin Exchange.",
+      "protectedAgainstAttacks":"17 out of 27",
+      "accessibilityScore":"0.61",
+      "price":"11.31"
+   },
+   {
+      "logo":"https://cryptologos.cc/logos/lido-dao-ldo-logo.png",
+      "name":"Lido DAO (LDO)",
+      "tps":30,
+      "maxRecordedTps":30,
+      "maxTheoreticalTps":"100,000+ (after Ethereum 2.0 upgrades)",
+      "fees":"30-100 gwei/byte (Ethereum-based)",
+      "energy":"0.03 kWh per transaction",
+      "finality":"6-12 min (Ethereum-based)",
+      "faultTolerance":"51%",
+      "validatorsHashrate":"N/A (Ethereum Proof of Stake)",
+      "whitepaper":"https://lido.fi/Lido-Whitepaper.pdf",
+      "comment":"Lido is a liquid staking solution on Ethereum, allowing users to stake ETH and receive stETH in return.",
+      "protectedAgainstAttacks":"18 out of 27",
+      "accessibilityScore":"0.72",
+      "price":"1.44"
+   },
+   {
+      "logo":"https://cryptologos.cc/logos/worldcoin-wld-logo.png",
+      "name":"Worldcoin (WLD)",
+      "tps":"55,000",
+      "maxRecordedTps":"55,000",
+      "maxTheoreticalTps":"100,000+ (with sharding upgrades)",
+      "fees":"0.00001 WLD/byte",
+      "energy":"0.00001 kWh per transaction",
+      "finality":"2 sec",
+      "faultTolerance":"33%",
+      "validatorsHashrate":"N/A",
+      "whitepaper":"https://worldcoin.org/whitepaper",
+      "comment":"Worldcoin aims to provide universal access to the global economy with a privacy-preserving biometric identification system.",
+      "protectedAgainstAttacks":"17 out of 27",
+      "accessibilityScore":"0.6",
+      "price":"2.43"
+   },
+   {
+      "logo":"https://cryptologos.cc/logos/iota-miota-logo.png",
+      "name":"IOTA (MIOTA)",
+      "tps":"1,000",
+      "maxRecordedTps":"1,000",
+      "maxTheoreticalTps":"unlimited (DAG-based Tangle)",
+      "fees":"0 (no fees)",
+      "energy":"0.00001 kWh per transaction",
+      "finality":"2-3 min",
+      "faultTolerance":"33%",
+      "validatorsHashrate":"N/A (Coordinator system)",
+      "whitepaper":"https://docs.iota.org/docs/the-tangle/0.1/whitepaper/overview",
+      "comment":"IOTA is a distributed ledger aimed at the Internet of Things (IoT), with zero-fee transactions enabled by its DAG-based structure.",
+      "protectedAgainstAttacks":"18 out of 27",
+      "accessibilityScore":"0.58",
+      "price":"0.19"
+   },
+   {
+      "logo":"https://cryptologos.cc/logos/zcash-zec-logo.png",
+      "name":"Zcash (ZEC)",
+      "tps":6,
+      "maxRecordedTps":6,
+      "maxTheoreticalTps":27,
+      "fees":"0.0001 ZEC/byte",
+      "energy":"82 kWh per transaction",
+      "finality":"75-150 min",
+      "faultTolerance":"51%",
+      "validatorsHashrate":"5.5 GH/s",
+      "whitepaper":"https://z.cash/technology/whitepaper.html",
+      "comment":"Zcash is a privacy-focused cryptocurrency offering shielded transactions using zero-knowledge proofs (zk-SNARKs).",
+      "protectedAgainstAttacks":"16 out of 27",
+      "accessibilityScore":"0.65",
+      "price":"27.35"
+   },
+   {
+      "logo":"https://cryptologos.cc/logos/eos-eos-logo.png",
+      "name":"EOS (EOS)",
+      "tps":"4,000",
+      "maxRecordedTps":"4,000",
+      "maxTheoreticalTps":"100,000+ (with horizontal scaling)",
+      "fees":"0 (fee-less transactions based on resource staking)",
+      "energy":"0.001 kWh per transaction",
+      "finality":"0.5 sec",
+      "faultTolerance":"33%",
+      "validatorsHashrate":"N/A (Delegated Proof of Stake)",
+      "whitepaper":"https://github.com/EOSIO/Documentation/blob/master/TechnicalWhitePaper.md",
+      "comment":"EOS is a smart contract platform known for its scalability and fee-less transactions, utilizing Delegated Proof of Stake (DPoS).",
+      "protectedAgainstAttacks":"17 out of 27",
+      "accessibilityScore":"0.68",
+      "price":"0.82"
+   },
+   {
+      "logo":"https://cryptologos.cc/logos/neo-neo-logo.png",
+      "name":"NEO (NEO)",
+      "tps":"1,000",
+      "maxRecordedTps":"1,000",
+      "maxTheoreticalTps":"100,000+ (with upgrades)",
+      "fees":"0.001 NEO/byte",
+      "energy":"0.00005 kWh per transaction",
+      "finality":"15-20 sec",
+      "faultTolerance":"66%",
+      "validatorsHashrate":"N/A (dBFT - Delegated Byzantine Fault Tolerance)",
+      "whitepaper":"https://docs.neo.org/docs/en-us/basic/whitepaper.html",
+      "comment":"NEO is a blockchain platform known as the 'Ethereum of China,' supporting digital assets and smart contracts with dBFT consensus.",
+      "protectedAgainstAttacks":"18 out of 27",
+      "accessibilityScore":"0.57",
+      "price":"14.23"
+   },
+   {
+      "logo":"https://cryptologos.cc/logos/terra-luna-luna-logo.png",
+      "name":"Terra (LUNA)",
+      "tps":"10,000",
+      "maxRecordedTps":"10,000",
+      "maxTheoreticalTps":"10,000+",
+      "fees":"0.001-0.01 LUNA/byte",
+      "energy":"0.0001 kWh per transaction",
+      "finality":"1-2 sec",
+      "faultTolerance":"33%",
+      "validatorsHashrate":"N/A (Proof of Stake)",
+      "whitepaper":"https://terra.money/Terra_White_paper.pdf",
+      "comment":"Terra is a blockchain protocol using stablecoins pegged to various currencies to power decentralized financial applications.",
+      "protectedAgainstAttacks":"16 out of 27",
+      "accessibilityScore":"0.57"
+   },
+   {
+      "name":"Turbo",
+      "logo":"https://iq.wiki/_next/image?url=https%3A%2F%2Fipfs.everipedia.org%2Fipfs%2FQmPb4o8Fv5RgaTazp4Xch2JhezkzbZyXsXE63mz9bqnQuh&w=640&q=95",
+      "tps":"256",
+      "maxRecordedTps":"256",
+      "maxTheoreticalTps":"10000",
+      "fees":"0.00001",
+      "energy":"0.02",
+      "finality":"1",
+      "faultTolerance":"66",
+      "validatorsHashrate":"N/A",
+      "protectedAgainstAttacks":"18 out of 27",
+      "accessibilityScore":"0.72",
+      "whitepaper":"https://turbotoken.io/whitepaper",
+      "comment":"Turbo is a meme coin created entirely through AI, focusing on fast transactions and low fees, but lacks scalability beyond small-scale financial operations.",
+      "price":"0.0023"
+   },
+   {
+      "name":"GOAT",
+      "logo":"https://cryptologos.cc/logos/goat-goat-logo.png",
+      "tps":"6500",
+      "maxRecordedTps":"6500",
+      "maxTheoreticalTps":"65000",
+      "fees":"0.0001",
+      "energy":"0.05",
+      "finality":"2.5",
+      "faultTolerance":"67",
+      "validatorsHashrate":"N/A",
+      "protectedAgainstAttacks":"19 out of 27",
+      "accessibilityScore":"0.65",
+      "whitepaper":"https://goat-network.io/whitepaper",
+      "comment":"GOAT provides moderate scalability and low fees, making it well-suited for mid-scale DeFi applications with a secure PoA-based consensus."
+   },
+   {
+      "name":".ai",
+      "logo":"https://cryptologos.cc/logos/ai-ai-logo.png",
+      "tps":"10000",
+      "maxRecordedTps":"9500",
+      "maxTheoreticalTps":"12000",
+      "fees":"0.002",
+      "energy":"0.03",
+      "finality":"1.2",
+      "faultTolerance":"67",
+      "validatorsHashrate":"N/A",
+      "protectedAgainstAttacks":"20 out of 27",
+      "accessibilityScore":"0.75",
+      "whitepaper":"https://ai-blockchain.io/whitepaper",
+      "comment":".ai emphasizes scalability and integration of AI into decentralized finance and governance mechanisms."
+   },
+   {
+      "name":"Fetch.ai",
+      "logo":"https://logotyp.us/file/fetch-ai.svg",
+      "tps":"30000",
+      "maxRecordedTps":"28000",
+      "maxTheoreticalTps":"40000",
+      "fees":"0.001",
+      "energy":"0.02",
+      "finality":"0.5",
+      "faultTolerance":"67",
+      "validatorsHashrate":"N/A",
+      "protectedAgainstAttacks":"21 out of 27",
+      "accessibilityScore":"0.80",
+      "whitepaper":"https://fetch.ai/whitepaper",
+      "comment":"Fetch.ai leverages autonomous agents to create scalable AI solutions for data sharing and logistics optimization.",
+      "price":"1.46"
+   },
+   {
+      "name":"AGIX",
+      "logo":"https://cryptologos.cc/logos/singularitynet-agix-logo.png",
+      "tps":"5000",
+      "maxRecordedTps":"4800",
+      "maxTheoreticalTps":"10000",
+      "fees":"0.002",
+      "energy":"0.04",
+      "finality":"2",
+      "faultTolerance":"67",
+      "validatorsHashrate":"N/A",
+      "protectedAgainstAttacks":"22 out of 27",
+      "accessibilityScore":"0.85",
+      "whitepaper":"https://singularitynet.io/whitepaper",
+      "comment":"AGIX is a leader in decentralized AI, offering solutions for global intelligence and AI-driven services.",
+      "price":"0.34"
+   },
+   {
+      "name":"The Cash Network",
+      "logo":"https://cryptologos.cc/logos/the-cash-network-logo.png",
+      "tps":"500",
+      "maxRecordedTps":"450",
+      "maxTheoreticalTps":"1000",
+      "fees":"0.005",
+      "energy":"0.3",
+      "finality":"10",
+      "faultTolerance":"51",
+      "validatorsHashrate":"N/A",
+      "protectedAgainstAttacks":"16 out of 27",
+      "accessibilityScore":"0.55",
+      "whitepaper":"https://thecashnetwork.org/whitepaper",
+      "comment":"The Cash Network is a low-scale blockchain prioritizing reliability and transaction security over high scalability.",
+      "price":"0.00035"
+   },
+   {
+      "name":"The Graph (GRT)",
+      "logo":"https://cryptologos.cc/logos/the-graph-grt-logo.png",
+      "tps":"2000",
+      "maxRecordedTps":"1900",
+      "maxTheoreticalTps":"3000",
+      "fees":"0.0002",
+      "energy":"0.1",
+      "finality":"2",
+      "faultTolerance":"67",
+      "validatorsHashrate":"N/A",
+      "protectedAgainstAttacks":"21 out of 27",
+      "accessibilityScore":"0.78",
+      "whitepaper":"https://thegraph.com/whitepaper",
+      "comment":"The Graph specializes in indexing and querying blockchain data, enabling seamless interaction with dApps and DeFi platforms.",
+      "price":"0.24"
+   },
+   {
+      "name":"Ocean Protocol",
+      "logo":"https://cryptologos.cc/logos/ocean-protocol-ocean-logo.png",
+      "tps":"1500",
+      "maxRecordedTps":"1400",
+      "maxTheoreticalTps":"2500",
+      "fees":"0.0003",
+      "energy":"0.15",
+      "finality":"5",
+      "faultTolerance":"67",
+      "validatorsHashrate":"N/A",
+      "protectedAgainstAttacks":"20 out of 27",
+      "accessibilityScore":"0.74",
+      "whitepaper":"https://oceanprotocol.com/whitepaper",
+      "comment":"Ocean Protocol focuses on secure data sharing and tokenization, making it a critical infrastructure for decentralized marketplaces.",
+      "price":"0.70"
+   },
+   {
+      "name":"Bonk",
+      "logo":"https://cryptologos.cc/logos/bonk1-bonk-logo.png",
+      "tps":"65000",
+      "maxRecordedTps":"256",
+      "maxTheoreticalTps":"65000",
+      "fees":"0.00025",
+      "energy":"0.02",
+      "finality":"1",
+      "faultTolerance":"67",
+      "validatorsHashrate":"N/A",
+      "protectedAgainstAttacks":"19 out of 27",
+      "accessibilityScore":"0.68",
+      "whitepaper":"https://bonkcoin.io/whitepaper",
+      "comment":"Bonk is a Solana-based memecoin known for its low transaction fees and high transaction throughput, integrating seamlessly into the Solana DeFi ecosystem.",
+      "price":"0.0000458"
+   },
+   {
+      "name":"Sei",
+      "logo":"https://cryptologos.cc/logos/sei-sei-logo.png",
+      "tps":"12500",
+      "maxRecordedTps":"256",
+      "maxTheoreticalTps":"12500",
+      "fees":"0.0003",
+      "energy":"0.1",
+      "finality":"0.4",
+      "faultTolerance":"67",
+      "validatorsHashrate":"N/A",
+      "protectedAgainstAttacks":"22 out of 27",
+      "accessibilityScore":"0.75",
+      "whitepaper":"https://blog.sei.io/whitepaper",
+      "comment":"Sei employs the Twin-Turbo Consensus mechanism, enabling sub-second finality and high throughput optimized for decentralized exchanges and DeFi applications.",
+      "price":"0.63"
+   },
+   {
+      "logo":"https://cryptologos.cc/logos/zilliqa-zil-logo.png",
+      "name":"Zilliqa (ZIL)",
+      "tps":"2,828",
+      "maxRecordedTps":"2,828",
+      "maxTheoreticalTps":"unknown (scales linearly with network size)",
+      "fees":"0.001 ZIL/byte",
+      "energy":"0.0003 kWh per transaction",
+      "finality":"10-20 sec",
+      "faultTolerance":"33%",
+      "validatorsHashrate":"N/A (Practical Byzantine Fault Tolerance - PBFT)",
+      "whitepaper":"https://docs.zilliqa.com/whitepaper.pdf",
+      "comment":"Zilliqa is known for being the first blockchain to implement sharding, which allows it to scale linearly as the network grows.",
+      "protectedAgainstAttacks":"19 out of 27",
+      "accessibilityScore":"0.61",
+      "price":"0.02"
+   },
+   {
+      "logo":"https://cryptologos.cc/logos/dash-dash-logo.png",
+      "name":"Dash (DASH)",
+      "tps":56,
+      "maxRecordedTps":56,
+      "maxTheoreticalTps":56,
+      "fees":"0.0001 DASH/byte",
+      "energy":"0.02 kWh per transaction",
+      "finality":"2.5 min",
+      "faultTolerance":"51%",
+      "validatorsHashrate":"6.2 PH/s",
+      "whitepaper":"https://docs.dash.org/en/stable/introduction/about.html",
+      "comment":"Dash is focused on fast, low-fee payments with additional features like InstantSend and PrivateSend for enhanced privacy.",
+      "protectedAgainstAttacks":"17 out of 27",
+      "accessibilityScore":"0.65",
+      "price":"43.18"
+   },
+   {
+      "logo":"https://cdn.prod.website-files.com/6053f7fca5bf627283b582c2/6266da1a31ba21e2dacb3bfe_eRadix-Icon-Transparent-SVG.svg",
+      "name":"Radix (XRD)",
+      "tps":"1,300",
+      "maxRecordedTps":"1,300",
+      "maxTheoreticalTps":"unlimited (scales with network usage)",
+      "fees":"0.0001 XRD/byte",
+      "energy":"0.0005 kWh per transaction",
+      "finality":"1-5 sec",
+      "faultTolerance":"33%",
+      "validatorsHashrate":"N/A (Cerberus consensus)",
+      "whitepaper":"https://www.radixdlt.com/whitepapers",
+      "comment":"Radix is focused on scalability and security with its Cerberus consensus, designed for decentralized finance applications.",
+      "protectedAgainstAttacks":"19 out of 27",
+      "accessibilityScore":"0.57",
+      "price":"0.057"
+   },
+   {
+      "logo":"https://cryptologos.cc/logos/dogs-dogs-logo.png",
+      "name":"DOGS (DOGS)",
+      "tps":"55",
+      "maxRecordedTps":"55",
+      "maxTheoreticalTps":"100",
+      "fees":"5-20 gwei/byte",
+      "energy":"0.0005 kWh per transaction",
+      "finality":"1 sec",
+      "faultTolerance":"33%",
+      "validatorsHashrate":"N/A (BSC Proof of Staked Authority)",
+      "whitepaper":"N/A",
+      "comment":"DOGS is a reward token within the Animal Farm ecosystem, used for staking and farming rewards on Binance Smart Chain.",
+      "protectedAgainstAttacks":"17 out of 27",
+      "accessibilityScore":"0.50",
+      "price":"0.0001"
+   },
+   {
+      "logo":"https://w7.pngwing.com/pngs/720/939/png-transparent-paypal-computer-icons-logo-paypal-blue-angle-service-thumbnail.png",
+      "name":"PayPal",
+      "tps":"450-500",
+      "maxRecordedTps":500,
+      "maxTheoreticalTps":"unknown (scalable based on internal systems)",
+      "fees":"2.9% + $0.30 per transaction",
+      "energy":"N/A (centralized system)",
+      "finality":"instant",
+      "faultTolerance":"N/A (centralized control)",
+      "validatorsHashrate":"N/A (centralized system)",
+      "whitepaper":"N/A",
+      "comment":"PayPal is a centralized payment platform used globally for quick, secure online payments, with built-in fraud protection.",
+      "protectedAgainstAttacks":"Protected against 25 out of 27 attacks (centralized nature offers protection)",
+      "accessibilityScore":"0.67",
+      "price":"68.92"
+   },
+   {
+      "logo":"https://w7.pngwing.com/pngs/667/172/png-transparent-logo-brand-visa-font-visa-blue-text-trademark-thumbnail.png",
+      "name":"Visa",
+      "tps":"24,000",
+      "maxRecordedTps":"24,000",
+      "maxTheoreticalTps":"65,000+ (with upgrades to systems)",
+      "fees":"1.4%-2.5% per transaction",
+      "energy":"N/A (centralized system)",
+      "finality":"instant",
+      "faultTolerance":"N/A (centralized control)",
+      "validatorsHashrate":"N/A (centralized system)",
+      "whitepaper":"N/A",
+      "comment":"Visa is one of the largest centralized payment processors in the world, focusing on high throughput and security.",
+      "protectedAgainstAttacks":"Protected against 25 out of 27 attacks (centralized system)",
+      "accessibilityScore":"0.67",
+      "price":"240.87"
+   },
+   {
+      "logo":"https://w7.pngwing.com/pngs/397/885/png-transparent-logo-mastercard-product-font-mastercard-text-orange-logo.png",
+      "name":"Mastercard",
+      "tps":"5,000",
+      "maxRecordedTps":"5,000",
+      "maxTheoreticalTps":"65,000+ (with upgrades to systems)",
+      "fees":"1.5%-3% per transaction",
+      "energy":"N/A (centralized system)",
+      "finality":"instant",
+      "faultTolerance":"N/A (centralized control)",
+      "validatorsHashrate":"N/A (centralized system)",
+      "whitepaper":"N/A",
+      "comment":"Mastercard is a leading global centralized payment processor, with high throughput and secure systems.",
+      "protectedAgainstAttacks":"Protected against 25 out of 27 attacks (centralized system)",
+      "accessibilityScore":"0.67",
+      "price":"392.74"
+   },
+   {
+      "logo":"https://w7.pngwing.com/pngs/306/588/png-transparent-skrill-cryptocurrencies-icon.png",
+      "name":"Skrill",
+      "tps":"1,000-5,000",
+      "maxRecordedTps":"5,000",
+      "maxTheoreticalTps":"unknown (scalable based on internal systems)",
+      "fees":"1.9% + $0.30 per transaction",
+      "energy":"N/A (centralized system)",
+      "finality":"instant",
+      "faultTolerance":"N/A (centralized control)",
+      "validatorsHashrate":"N/A (centralized system)",
+      "whitepaper":"N/A",
+      "comment":"Skrill is a digital wallet and payment service provider for online transactions, offering quick and secure payments.",
+      "protectedAgainstAttacks":"Protected against 25 out of 27 attacks (centralized system)",
+      "accessibilityScore":"0.66",
+      "price":"N/A"
+   },
+   {
+      "logo":"https://w7.pngwing.com/pngs/711/297/png-transparent-logo-american-express-payment-computer-icons-brand-american-express-blue-text-rectangle-thumbnail.png",
+      "name":"American Express",
+      "tps":"5,000",
+      "maxRecordedTps":"5,000",
+      "maxTheoreticalTps":"unknown (scalable based on internal systems)",
+      "fees":"2.5%-3.5% per transaction",
+      "energy":"N/A (centralized system)",
+      "finality":"instant",
+      "faultTolerance":"N/A (centralized control)",
+      "validatorsHashrate":"N/A (centralized system)",
+      "whitepaper":"N/A",
+      "comment":"American Express is a centralized credit card network, offering secure and fast transactions for users globally.",
+      "protectedAgainstAttacks":"Protected against 25 out of 27 attacks (centralized system)",
+      "accessibilityScore":"0.66",
+      "price":"153.80"
+   }
+];
+
+// Function to clean data
+// Function to clean data
+function parseRange(value) {
+    if (typeof value === 'string') {
+        // Handle "unlimited" or "infinite"
+        if (value.toLowerCase().includes('unlimited') || value.toLowerCase().includes('infinite')) {
+            return Infinity;
+        }
+
+        // Handle "unknown"
+        if (value.toLowerCase().includes('unknown')) {
+            return null;
+        }
+
+        // Handle ranges with "-" (e.g., "1000-2000")
+        if (value.includes('-')) {
+            const numbers = value.split('-')
+                .map(num => parseFloat(num.replace(/[^0-9.]/g, '')))
+                .filter(num => !isNaN(num));
+            return numbers.length ? Math.max(...numbers) : null;
+        }
+
+        // Handle values with "+" (e.g., "100,000+")
+        if (value.includes('+')) {
+            const number = parseFloat(value.replace(/[^0-9.]/g, ''));
+            return isNaN(number) ? null : number;
+        }
+
+        // Extract only the first valid number sequence, ignoring additional text
+        const match = value.match(/^\d{1,3}(?:,\d{3})*(?:\.\d+)?/);
+        if (match) {
+            const cleanedNumber = parseFloat(match[0].replace(/,/g, ''));  // Remove commas for large numbers
+            return isNaN(cleanedNumber) ? null : cleanedNumber;
+        }
+    }
+    return value;
+}
+
+function parseFinality(value) {
+    if (typeof value !== 'string') return null;
+    const minutes = value.toLowerCase().includes('minute') || value.includes('min');
+    const number = parseFloat(value.replace(/[^0-9.]/g, ''));
+    if (isNaN(number)) return null;
+    return minutes ? number * 60 : number;
+}
+
+function parseFees(value) {
+    if (typeof value !== 'string') return null;
+    const match = value.match(/\d*\.?\d+/g);
+    if (!match) return null;
+    const fees = match.map(parseFloat);
+    return fees.length ? Math.max(...fees) : null;
+}
+
+function parseProtectedAttacks(value) {
+    if (typeof value !== 'string') return null;
+    const match = value.match(/(\d+)\s*(?:out\s*of)\s*(\d+)/i);
+    if (match) {
+        return Number(match[1]) / Number(match[2]);
+    }
+    return null;
+}
+
+function parseEnergy(value) {
+    if (typeof value !== 'string') return null;
+    const number = parseFloat(value.replace(/[^0-9.]/g, ''));
+    return isNaN(number) ? null : number;
+}
+
+// Clean the data
+function cleanData(data) {
+    return data.map(item => ({
+        ...item,
+        tps: parseRange(item.tps),
+        maxTheoreticalTps: parseRange(item.maxTheoreticalTps),
+        fees: parseFees(item.fees),
+        finality: parseFinality(item.finality),
+        faultTolerance: parseRange(item.faultTolerance),
+        accessibilityScore: parseRange(item.accessibilityScore),
+        protectedAgainstAttacks: parseProtectedAttacks(item.protectedAgainstAttacks),
+        energy: parseEnergy(item.energy)
+    }));
+}
+
+// Apply the cleanData function to get cleanedData
+const cleanedData = cleanData(data);
+
+// Log the parsed data
+console.log("Parsed Data:", cleanedData);
+
+const maxValues = {
+    tps: Math.max(...cleanedData.map(item => item.tps).filter(val => val !== null && val !== undefined)),
+    fees: Math.min(...cleanedData.map(item => item.fees).filter(val => val !== null && val !== undefined)),
+    finality: Math.min(...cleanedData.map(item => item.finality).filter(val => val !== null && val !== undefined)),
+    faultTolerance: Math.max(...cleanedData.map(item => item.faultTolerance).filter(val => val !== null && val !== undefined)),
+    accessibilityScore: Math.max(...cleanedData.map(item => item.accessibilityScore).filter(val => val !== null && val !== undefined)),
+    protectedAgainstAttacks: Math.max(...cleanedData.map(item => item.protectedAgainstAttacks).filter(val => val !== null && val !== undefined)),
+    energy: Math.min(...cleanedData.map(item => item.energy).filter(val => val !== null && val !== undefined))
+};
+
+function calculateScore(item) {
+    const getScore = (value, maxValue, higher_is_better = true) => {
+        if (value === null || value === undefined) return 0;
+        
+        if (maxValue === Infinity  || !isFinite(maxValue)) {maxValue = 100;}
+        else if (isFinite(maxValue)) {
+            maxValue = Math.max(...Object.values(maxValues).filter(isFinite));
+        }
+
+        return higher_is_better
+            ? value
+            : value / maxValue;
+    };
+
+    // Calculate individual scores
+    const tpsScore = getScore(item.tps, maxValues.tps, true);
+    const feesScore = getScore(item.fees, maxValues.fees, false);
+    const finalityScore = getScore(item.finality, maxValues.finality, false);
+    const faultToleranceScore = getScore(item.faultTolerance, maxValues.faultTolerance, true);
+    const accessibilityScore = getScore(item.accessibilityScore, maxValues.accessibilityScore, true);
+    const protectionScore = getScore(item.protectedAgainstAttacks, maxValues.protectedAgainstAttacks, true);
+    const energyScore = getScore(item.energy, maxValues.energy, false);
+
+    const totalScore = feesScore + energyScore - tpsScore - finalityScore - faultToleranceScore - accessibilityScore - protectionScore;
+    const divergency = totalScore / item.price;
+
+
+    // Log calculation details
+    console.log(`
+        Calculating score for ${item.name}:
+        TPS Score: ${tpsScore} (Value: ${item.tps}, Max: ${maxValues.tps}),
+        Fees Score: ${feesScore} (Value: ${item.fees}, Max: ${maxValues.fees}),
+        Finality Score: ${finalityScore} (Value: ${item.finality}, Max: ${maxValues.finality}),
+        Fault Tolerance Score: ${faultToleranceScore} (Value: ${item.faultTolerance}, Max: ${maxValues.faultTolerance}),
+        Accessibility Score: ${accessibilityScore} (Value: ${item.accessibilityScore}, Max: ${maxValues.accessibilityScore}),
+        Protection Score: ${protectionScore} (Value: ${item.protectedAgainstAttacks}, Max: ${maxValues.protectedAgainstAttacks}),
+        Energy Score: ${energyScore} (Value: ${item.energy}, Max: ${maxValues.energy}),
+        Total Score: ${totalScore},
+        <fibrt: ${item.divergency}
+    `);
+
+    return {
+            ...item,
+            score: totalScore,
+            divergency: divergency
+    };
+}
+
+const processedData = cleanedData.map(calculateScore);
+
+// Populate the table with the original data, sorted by the calculated score
+function populateTable() {
+    
+    const tbody = document.getElementById('cryptoTableBody');
+    tbody.innerHTML = ''; // Clear existing rows
+
+    // Build the HTML for all rows in one go
+    let rows = '';
+    processedData.forEach(item => {
+        rows += `
+            <tr>
+                <td><img src="${item.logo || 'default-logo.png'}" alt="${item.name} logo" width="25"></td>
+                <td>${item.name}</td>
+                <td>${item.tps}</td>
+                <td>${item.maxRecordedTps}</td>
+                <td>${item.maxTheoreticalTps}</td>
+                <td>${item.fees}</td>
+                <td>${item.energy}</td>
+                <td>${item.finality}</td>
+                <td>${item.faultTolerance}</td>
+                <td>${item.validatorsHashrate}</td>
+                <td>${item.accessibilityScore}</td>
+                <td>${item.protectedAgainstAttacks}</td>
+                <td class="comment">${item.comment}</td>
+                <td class="comment"><a href="${item.whitepaper}" target="_blank">${item.whitepaper !== 'N/A' ? item.whitepaper : ''}</a></td>
+                <td>${item.price}</td>
+                <td>${item.divergency}</td>
+            </tr>
+        `;
+    });
+
+    // Set all rows at once
+    tbody.innerHTML = rows;
+}
+
+// Step 2: Sorting functionality including score sorting
+function sortTable(columnIndex = null) {
+    // If no column index is provided, sort by the score from our processed data
+    if (columnIndex === null) {
+        // Sort processedData by score in descending order
+        processedData.sort((a, b) => b.score - a.score);
+        // Repopulate the table with the sorted data
+        populateTable();
+        adjustColumnWidths();
+        return;
+    }
+
+    // Original column sorting logic for when a specific column is clicked
+    let table, rows, switching, i, x, y, shouldSwitch, dir, switchCount = 0;
+    table = document.querySelector("table");
+    switching = true;
+    dir = "asc";
+
+    while (switching) {
+        switching = false;
+        rows = table.rows;
+        for (i = 1; i < (rows.length - 1); i++) {
+            shouldSwitch = false;
+            x = rows[i].getElementsByTagName("TD")[columnIndex];
+            y = rows[i + 1].getElementsByTagName("TD")[columnIndex];
+            
+            let xValue = x.innerHTML.replace(/[^0-9.-]+/g, '');
+            let yValue = y.innerHTML.replace(/[^0-9.-]+/g, '');
+            
+            xValue = parseFloat(xValue);
+            yValue = parseFloat(yValue);
+
+            if (dir === "asc" && xValue > yValue) {
+                shouldSwitch = true;
+                break;
+            } else if (dir === "desc" && xValue < yValue) {
+                shouldSwitch = true;
+                break;
+            }
+        }
+        if (shouldSwitch) {
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+            switchCount++;
+        } else if (switchCount === 0 && dir === "asc") {
+            dir = "desc";
+            switching = true;
+        }
+    }
+    adjustColumnWidths();
+}
+
+function adjustColumnWidths() {
+    const headers = document.querySelectorAll('th');
+    const rows = document.querySelectorAll('tbody tr');
+    
+    if (headers.length > 0 && rows.length > 0) {
+        rows.forEach(row => {
+            row.querySelectorAll('td').forEach((cell, index) => {
+                const headerWidth = headers[index].offsetWidth;
+                cell.style.width = `${headerWidth}px`;
+            });
+        });
+    }
+}
+
+// Initialize table with sorted data
+window.onload = () => {
+    // Sort processedData by score initially
+    processedData.sort((a, b) => b.score - a.score);
+    populateTable();
+    adjustColumnWidths();
+};
+</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3347967694449901"
+     crossorigin="anonymous"></script>
+    <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-3347967694449901"
+     data-ad-slot="8915999894"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</body>
+</html>
