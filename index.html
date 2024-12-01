@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="google-adsense-account" content="ca-pub-3347967694449901">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="black.ico" rel="icon" type="image/x-icon">
+<title>ruletz</title>
+<style>
+    body {
+        position: relative;
+        background-color: black;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .title{
+        position:relative;
+        align-self: center;
+        text-align: center;
+        font-size: 64px;
+        font-family: 'Helvetica Neue', sans-serif;
+        font-weight: bold;
+        color: white;
+        cursor: pointer;
+        margin-bottom: 40px;
+    }
+
+    .container {
+        position: relative;
+        align-self: center;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 10px;
+    }
+
+    .button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px dashed white;
+        aspect-ratio: 1.78;
+        font-size: 2.2em;
+        font-weight: bold;
+        color: white;
+        background: transparent;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .button.turquoise:hover {
+        border-color: turquoise;
+        color: turquoise;
+    }
+
+    .button.red:hover {
+        border-color: red;
+        color: red;
+    }
+
+    .box {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 80%;
+        height: 80%;
+        z-index: 1;
+        font-size: 1em;
+        font-family: Helvetica Neue;
+        color: white;
+        justify-content: center;
+        background-color: black;
+        border: 2px dashed white;
+        overflow: auto;
+        position: absolute;
+        padding: 20px;
+        box-sizing: border-box;
+        display: none; 
+    }
+
+    .trademark {
+        position: relative;
+        align-self: center;
+        color: white;
+        text-align: center;
+        margin-top: 20px;
+        font-size: 12px;
+    }
+
+    @media screen and (max-width: 768px) {
+        .container {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+
+</style>
+</head>
+<body>
+    <div class="title" onclick="window.location.reload()">RULETA</div>
+    <div class="container">
+        <div class="button" id="1" onclick="toggleContent('content1')">LIFE</div>
+        <div class="box" id="content1" style="display: none">
+            <p>1. Externalized Survival
+Goal: Increase safety and minimize survival risk.
+By creating technology or environments that reduce survival pressures, such as protected habitats, secure food sources, and automated health monitoring, organisms (including humans) would spend less energy on basic survival and more on advanced tasks like learning, social connection, or creativity.
+
+2. Externalized Reproduction
+Goal: Improve reproduction success rates and genetic diversity.
+For humans and animals, this might involve genetic counseling, fertility treatments, or selective breeding to prevent genetic diseases and increase species resilience. For endangered species, efforts like controlled breeding programs or gene editing could counteract the natural decline in genetic diversity due to environmental pressures.
+
+3. Externalized Adaptation and Growth
+Goal: Accelerate evolution and adaptability.
+Environments can be designed to support adaptive learning and skill development in both animals and humans. Additionally, artificial intelligence and genetic engineering could allow organisms to adapt to new challenges more rapidly than natural evolution would allow, preparing organisms for changes like climate shifts or new diseases.
+
+4. Externalized Energy Management
+Goal: Optimize energy intake and reduce effort.
+Enhancing access to sustainable and nutrient-rich food sources or using wearable tech that monitors energy use could help organisms meet their energy needs more efficiently. In agriculture, this might mean precision feeding or crop systems designed to support optimal health and growth, reducing the energy an organism spends searching for resources.
+
+5. Externalized Homeostasis
+Goal: Maintain internal stability with minimal individual effort.
+Wearables that monitor and adjust bodily conditions in real-time, such as temperature, hydration, and blood chemistry, can help humans maintain homeostasis more effectively. For animals or plants, automated climate control and hydration systems in habitats could reduce stress and promote well-being.</p>
+        </div>
+        <div class="button" id="2" onclick="toggleContent('content2')">VALUES</div>
+        <div class="box" id = "content2" style= "display: none">
+            <p>If I speak in the tongues of men or of angels, but do not have love, I am only a resounding gong or a clanging cymbal.</p>
+            <p>If I have the gift of prophecy and can fathom all mysteries and all knowledge, and if I have a faith that can move mountains, but do not have love, I am nothing. Love takes hostages. It gets inside you out and leaves you crying in the darkness, so simple a phrase like 'maybe we should be just friends' or 'how very perceptive' turns into a glass splinter working its way into your heart. It hurts. Not just in the imagination.</p>
+            <p>That feels like the description of a perfect observational joke too, one that points out something everyone knows is true yet somehow we've never heard expressed before. The result makes people feel good (yeah, laughs!), but it's also, in a small way, an act of empathy that makes people feel less alone.</p>
+        </div>
+        <div class="button" id="3" onclick="location.href = 'https://en.liberapay.com/ruleta/donate'">
+            <p style="font-family: 'Times New Roman'">ooh dá lá 1 euro kk</p>
+            <a href="https://imgbb.com/"><img src="https://i.ibb.co/tJk4Vw9/Tuco.webp" alt="Tuco" border="0"></a>
+        </div>
+
+        <div class="button" id="4" onclick="location.href = 'https://paypal.me/ruletz'">SUPPORT</div>
+        <div class="button turquoise" id="5" onclick="location.href = 'https://sharkbite.rocks'">SHARKBITE</div>
+        <div class="button red" id="6" onclick="fetchYoutubeVideo()">YOUTUBE</div>
+    </div>
+    <div class="trademark">&copy; 2024 Host by InfinityFree. All rights reserved.</div>
+
+    <script>
+
+        function toggleContent(contentId) {
+            var contentBox = document.querySelector(`#${contentId}`);
+            contentBox.style.display = contentBox.style.display === 'none' ? 'block' : 'none';
+        }
+
+        document.addEventListener('click', function(event) {
+            var boxes = document.querySelectorAll('.box');
+            boxes.forEach(function(box) {
+                if (box.style.display === 'block' && !box.contains(event.target) && !event.target.classList.contains('button')) {
+                    box.style.display = 'none';
+                }
+            });
+        });
+
+        function fetchYoutubeVideo() {
+            fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=UCIM-WdLKUYMw-csqJXN5CnQ&order=date&type=video&key=AIzaSyA9EKcXYYrhuj9hUi1R1Dx_hVDdk_kIyvU`)
+                .then(response => response.json())
+                .then(data => {
+                    const videoId = data.items[0].id.videoId;
+                    window.location.href = `https://www.youtube.com/watch?v=${videoId}`;
+                })
+                .catch(() => {
+                    window.location.href = 'https://youtu.be/ruletazone';
+                });
+        }
+    </script>
+</body>
+</html>
