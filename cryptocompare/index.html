@@ -129,7 +129,7 @@
         let data = [
    {
       "logo":"https://cryptologos.cc/logos/bitcoin-btc-logo.png",
-      "name":"Bitcoin",
+      "name":"Bitcoin (BTC)",
       "tps":7,
       "maxRecordedTps":7,
       "maxTheoreticalTps":10,
@@ -146,7 +146,7 @@
    },
    {
       "logo":"https://cryptologos.cc/logos/ethereum-eth-logo.png",
-      "name":"Ethereum",
+      "name":"Ethereum (ETH)",
       "tps":30,
       "maxRecordedTps":30,
       "maxTheoreticalTps":"100,000+ (after Ethereum 2.0 upgrades)",
@@ -180,7 +180,7 @@
    },
    {
       "logo":"https://cryptologos.cc/logos/solana-sol-logo.png",
-      "name":"Solana",
+      "name":"Solana (SOL)",
       "tps":"3,000-65,000",
       "maxRecordedTps":"65,000",
       "maxTheoreticalTps":"710,000",
@@ -791,38 +791,6 @@
       "price":"1.33"
    },
    {
-      "logo":"https://cryptologos.cc/logos/aave-aave-logo.png",
-      "name":"Aave (AAVE)",
-      "tps":30,
-      "maxRecordedTps":30,
-      "maxTheoreticalTps":"100,000+ (after Ethereum 2.0 upgrades)",
-      "fees":"30-100 gwei/byte",
-      "energy":"0.03 kWh per transaction",
-      "finality":"6-12 min",
-      "faultTolerance":"51%",
-      "validatorsHashrate":"N/A (Proof of Stake)",
-      "whitepaper":"https://aave.com/whitepaper/",
-      "comment":"Aave is a decentralized finance protocol for lending and borrowing assets on Ethereum.",
-      "protectedAgainstAttacks":"18 out of 27",
-      "accessibilityScore":"0.78"
-   },
-   {
-      "logo":"https://cryptologos.cc/logos/uniswap-uni-logo.png",
-      "name":"Uniswap (UNI)",
-      "tps":30,
-      "maxRecordedTps":30,
-      "maxTheoreticalTps":"100,000+ (after Ethereum 2.0 upgrades)",
-      "fees":"30-100 gwei/byte (Ethereum-based)",
-      "energy":"0.03 kWh per transaction",
-      "finality":"6-12 min (Ethereum-based)",
-      "faultTolerance":"51%",
-      "validatorsHashrate":"N/A (Ethereum Proof of Stake)",
-      "whitepaper":"https://uniswap.org/whitepaper.pdf",
-      "comment":"Uniswap is a decentralized exchange (DEX) built on Ethereum, facilitating ERC-20 token swaps without intermediaries.",
-      "protectedAgainstAttacks":"18 out of 27",
-      "accessibilityScore":"0.81"
-   },
-   {
       "logo":"https://cryptologos.cc/logos/pepe-pepe-logo.png",
       "name":"Pepe (PEPE)",
       "tps":"15-30 (on Ethereum)",
@@ -838,22 +806,6 @@
       "protectedAgainstAttacks":"18 out of 27",
       "accessibilityScore":"0.5",
       "price":"0.00001966"
-   },
-   {
-      "logo":"https://cryptologos.cc/logos/shiba-inu-shib-logo.png",
-      "name":"Shiba Inu (SHIB)",
-      "tps":30,
-      "maxRecordedTps":30,
-      "maxTheoreticalTps":"100,000+ (after Ethereum 2.0 upgrades)",
-      "fees":"30-100 gwei/byte (Ethereum-based)",
-      "energy":"0.03 kWh per transaction (Ethereum-based)",
-      "finality":"6-12 min (Ethereum-based)",
-      "faultTolerance":"51%",
-      "validatorsHashrate":"N/A (Ethereum Proof of Stake)",
-      "whitepaper":"https://shibatoken.com/woofpaper",
-      "comment":"Shiba Inu started as a meme token on Ethereum and has gained a large community with DeFi integrations.",
-      "protectedAgainstAttacks":"18 out of 27",
-      "accessibilityScore":"0.62"
    },
    {
       "logo":"https://cdn.icon-icons.com/icons2/2130/PNG/512/btt_cryptocurrency_logo_icon_131461.png",
@@ -1059,7 +1011,7 @@
       "accessibilityScore":"0.57"
    },
    {
-      "name":"Turbo",
+      "name":"Turbo (TURBO)",
       "logo":"https://iq.wiki/_next/image?url=https%3A%2F%2Fipfs.everipedia.org%2Fipfs%2FQmPb4o8Fv5RgaTazp4Xch2JhezkzbZyXsXE63mz9bqnQuh&w=640&q=95",
       "tps":"256",
       "maxRecordedTps":"256",
@@ -1092,7 +1044,7 @@
       "comment":"GOAT provides moderate scalability and low fees, making it well-suited for mid-scale DeFi applications with a secure PoA-based consensus."
    },
    {
-      "name":".ai",
+      "name":".ai (AI)",
       "logo":"https://cryptologos.cc/logos/ai-ai-logo.png",
       "tps":"10000",
       "maxRecordedTps":"9500",
@@ -1108,7 +1060,7 @@
       "comment":".ai emphasizes scalability and integration of AI into decentralized finance and governance mechanisms."
    },
    {
-      "name":"Fetch.ai",
+      "name":"Fetch.ai (FET)",
       "logo":"https://logotyp.us/file/fetch-ai.svg",
       "tps":"30000",
       "maxRecordedTps":"28000",
@@ -1142,7 +1094,7 @@
       "price":"0.34"
    },
    {
-      "name":"The Cash Network",
+      "name":"The Cash Network (TCN)",
       "logo":"https://cryptologos.cc/logos/the-cash-network-logo.png",
       "tps":"500",
       "maxRecordedTps":"450",
@@ -1504,8 +1456,7 @@ function calculateScore(item) {
     const protectionScore = getScore(item.protectedAgainstAttacks, maxValues.protectedAgainstAttacks, true);
     const energyScore = getScore(item.energy, maxValues.energy, false);
 
-    const totalScore = feesScore + energyScore - tpsScore - finalityScore - faultToleranceScore - accessibilityScore - protectionScore;
-    const divergency = totalScore / item.price;
+    const totalScore = tpsScore + finalityScore + faultToleranceScore + accessibilityScore + protectionScore - feesScore - energyScore;
 
 
     // Log calculation details
@@ -1519,126 +1470,131 @@ function calculateScore(item) {
         Protection Score: ${protectionScore} (Value: ${item.protectedAgainstAttacks}, Max: ${maxValues.protectedAgainstAttacks}),
         Energy Score: ${energyScore} (Value: ${item.energy}, Max: ${maxValues.energy}),
         Total Score: ${totalScore},
-        <fibrt: ${item.divergency}
     `);
 
     return {
             ...item,
             score: totalScore,
-            divergency: divergency
     };
 }
 
 const processedData = cleanedData.map(calculateScore);
 
-// Populate the table with the original data, sorted by the calculated score
-function populateTable() {
-    
-    const tbody = document.getElementById('cryptoTableBody');
-    tbody.innerHTML = ''; // Clear existing rows
+let currentSort = { columnIndex: null, direction: "desc" }; // Default: Sort by score (not a column)
 
-    // Build the HTML for all rows in one go
-    let rows = '';
-    processedData.forEach(item => {
-        rows += `
-            <tr>
-                <td><img src="${item.logo || 'default-logo.png'}" alt="${item.name} logo" width="25"></td>
-                <td>${item.name}</td>
-                <td>${item.tps}</td>
-                <td>${item.maxRecordedTps}</td>
-                <td>${item.maxTheoreticalTps}</td>
-                <td>${item.fees}</td>
-                <td>${item.energy}</td>
-                <td>${item.finality}</td>
-                <td>${item.faultTolerance}</td>
-                <td>${item.validatorsHashrate}</td>
-                <td>${item.accessibilityScore}</td>
-                <td>${item.protectedAgainstAttacks}</td>
-                <td class="comment">${item.comment}</td>
-                <td class="comment"><a href="${item.whitepaper}" target="_blank">${item.whitepaper !== 'N/A' ? item.whitepaper : ''}</a></td>
-                <td>${item.price}</td>
-                <td>${item.divergency}</td>
-            </tr>
-        `;
-    });
-
-    // Set all rows at once
-    tbody.innerHTML = rows;
-}
-
-// Step 2: Sorting functionality including score sorting
-function sortTable(columnIndex = null) {
-    // If no column index is provided, sort by the score from our processed data
-    if (columnIndex === null) {
-        // Sort processedData by score in descending order
-        processedData.sort((a, b) => b.score - a.score);
-        // Repopulate the table with the sorted data
-        populateTable();
-        adjustColumnWidths();
+async function fetchAndUpdateTableWithSorting() {
+    const tableBody = document.getElementById("cryptoTableBody");
+    if (!tableBody) {
+        console.error("Table body not found in the DOM!");
         return;
     }
 
-    // Original column sorting logic for when a specific column is clicked
-    let table, rows, switching, i, x, y, shouldSwitch, dir, switchCount = 0;
-    table = document.querySelector("table");
-    switching = true;
-    dir = "asc";
+    try {
+        // Fetch API Data
+        const response = await fetch("https://r.database-725.workers.dev/");
+        if (!response.ok) throw new Error("API request failed");
+        const apiData = await response.json();
+        console.log("Fetched API Data:", apiData);
 
-    while (switching) {
-        switching = false;
-        rows = table.rows;
-        for (i = 1; i < (rows.length - 1); i++) {
-            shouldSwitch = false;
-            x = rows[i].getElementsByTagName("TD")[columnIndex];
-            y = rows[i + 1].getElementsByTagName("TD")[columnIndex];
-            
-            let xValue = x.innerHTML.replace(/[^0-9.-]+/g, '');
-            let yValue = y.innerHTML.replace(/[^0-9.-]+/g, '');
-            
-            xValue = parseFloat(xValue);
-            yValue = parseFloat(yValue);
+        // Clear table for repopulation
+        tableBody.innerHTML = "";
 
-            if (dir === "asc" && xValue > yValue) {
-                shouldSwitch = true;
-                break;
-            } else if (dir === "desc" && xValue < yValue) {
-                shouldSwitch = true;
-                break;
-            }
-        }
-        if (shouldSwitch) {
-            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-            switching = true;
-            switchCount++;
-        } else if (switchCount === 0 && dir === "asc") {
-            dir = "desc";
-            switching = true;
-        }
-    }
-    adjustColumnWidths();
-}
+        // Populate the table dynamically
+        processedData.forEach(item => {
+            // Match the corresponding API item by code in name
+            const apiItem = apiData.find(apiItem =>
+                item.name.toLowerCase().includes(apiItem.code.toLowerCase())
+            );
 
-function adjustColumnWidths() {
-    const headers = document.querySelectorAll('th');
-    const rows = document.querySelectorAll('tbody tr');
-    
-    if (headers.length > 0 && rows.length > 0) {
-        rows.forEach(row => {
-            row.querySelectorAll('td').forEach((cell, index) => {
-                const headerWidth = headers[index].offsetWidth;
-                cell.style.width = `${headerWidth}px`;
-            });
+            // Extract API rate or fallback to "N/A"
+            const rate = apiItem?.rate || "N/A";
+
+            // Calculate divergence dynamically
+            const divergence = rate && item.score
+                ? (item.score / rate).toString()
+                : (item.score) / item.price;
+
+            // Create and populate the table row
+            const row = document.createElement("tr");
+            row.setAttribute("data-item-code", item.code || "Unknown");
+
+            row.innerHTML = `
+                <td><img src="${item.logo || "path/to/default-logo.png"}" alt="${item.code || "Unknown"} logo" width="25"></td>
+                <td>${item.name || "Unknown"}</td>
+                <td>${item.tps || "N/A"}</td>
+                <td>${item.maxRecordedTps || "N/A"}</td>
+                <td>${item.maxTheoreticalTps || "N/A"}</td>
+                <td>${item.fees || "N/A"}</td>
+                <td>${item.energy || "N/A"}</td>
+                <td>${item.finality || "N/A"}</td>
+                <td>${item.faultTolerance || "N/A"}</td>
+                <td>${item.validatorsHashrate || "N/A"}</td>
+                <td>${item.accessibilityScore || "N/A"}</td>
+                <td>${item.protectedAgainstAttacks || "N/A"}</td>
+                <td class="comment">${item.comment || "N/A"}</td>
+                <td class="comment"><a href="${item.whitepaper}" target="_blank">${item.whitepaper !== 'N/A' ? item.whitepaper : ''}</a></td>
+                <td class="price-cell" data-rate="${rate}">${rate !== 'N/A' ? rate : item.price}</td>
+                <td class="divergency-cell">${divergence}</td>`;
+            tableBody.appendChild(row);
         });
+
+    } catch (error) {
+        console.error("Error fetching API data:", error.message);
     }
 }
 
-// Initialize table with sorted data
+function sortTable(columnIndex = null) {
+    if (columnIndex === null) {
+        processedData.sort((a, b) => b.score - a.score);
+        fetchAndUpdateTableWithSorting();
+        return;
+    }
+
+    const tableBody = document.getElementById("cryptoTableBody");
+    if (!tableBody) return;
+
+    const rows = Array.from(tableBody.querySelectorAll("tr"));
+
+    // Determine sort direction
+    const isAscending = !(currentSort.columnIndex === columnIndex && currentSort.direction === "asc");
+
+    rows.sort((rowA, rowB) => {
+        const cellA = rowA.cells[columnIndex];
+        const cellB = rowB.cells[columnIndex];
+        
+        let xValue = cellA.textContent.replace(/[^0-9.-]+/g, '');
+        let yValue = cellB.textContent.replace(/[^0-9.-]+/g, '');
+        
+        xValue = parseFloat(xValue) || 0;
+        yValue = parseFloat(yValue) || 0;
+
+        return isAscending ? xValue - yValue : yValue - xValue;
+    });
+
+    // Clear and repopulate tbody
+    tableBody.innerHTML = '';
+    rows.forEach(row => tableBody.appendChild(row));
+
+    // Update current sort state
+    currentSort = {
+        columnIndex,
+        direction: isAscending ? "asc" : "desc"
+    };
+}
+
+// Initialize with score sorting
 window.onload = () => {
-    // Sort processedData by score initially
     processedData.sort((a, b) => b.score - a.score);
-    populateTable();
-    adjustColumnWidths();
+    fetchAndUpdateTableWithSorting();
 };
+
+// Add header click listeners
+document.addEventListener('DOMContentLoaded', () => {
+    const headers = document.querySelectorAll('th');
+    headers.forEach((header, index) => {
+        header.addEventListener('click', () => sortTable(index));
+    });
+});
 </script>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3347967694449901"
      crossorigin="anonymous"></script>
