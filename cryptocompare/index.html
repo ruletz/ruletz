@@ -1507,11 +1507,11 @@ async function fetchAndUpdateTableWithSorting() {
             );
 
             // Extract API rate or fallback to "N/A"
-            const rate = apiItem?.rate || "N/A";
+            const price = apiItem?.price || "N/A";
 
             // Calculate divergence dynamically
-            const divergence = rate && item.score
-                ? (item.score / rate).toString()
+            const divergence = price && item.score
+                ? (item.score / price).toString()
                 : (item.score) / item.price;
 
             // Create and populate the table row
@@ -1524,7 +1524,7 @@ async function fetchAndUpdateTableWithSorting() {
                 <td>${item.tps || "N/A"}</td>
                 <td>${item.maxRecordedTps || "N/A"}</td>
                 <td>${item.maxTheoreticalTps || "N/A"}</td>
-                <td>${item.fees || "N/A"}</td>
+                <td>${item.fees}</td>
                 <td>${item.energy || "N/A"}</td>
                 <td>${item.finality || "N/A"}</td>
                 <td>${item.faultTolerance || "N/A"}</td>
@@ -1533,7 +1533,7 @@ async function fetchAndUpdateTableWithSorting() {
                 <td>${item.protectedAgainstAttacks || "N/A"}</td>
                 <td class="comment">${item.comment || "N/A"}</td>
                 <td class="comment"><a href="${item.whitepaper}" target="_blank">${item.whitepaper !== 'N/A' ? item.whitepaper : ''}</a></td>
-                <td class="price-cell" data-rate="${rate}">${rate !== 'N/A' ? rate : item.price}</td>
+                <td class="price-cell" data-rate="${price}">${price !== 'N/A' ? price : item.price}</td>
                 <td class="divergency-cell">${divergence}</td>`;
             tableBody.appendChild(row);
         });
