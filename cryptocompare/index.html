@@ -1555,11 +1555,13 @@ function sortTable(columnIndex = null) {
 
     const rows = Array.from(tableBody.querySelectorAll("tr"));
 
-    // Determine if we should sort in ascending or descending order
-    const isSameColumn = currentSort.columnIndex === columnIndex;
-    const newDirection = isSameColumn 
-        ? (currentSort.direction === "asc" ? "desc" : "asc") 
-        : "desc";
+    // Toggle sort direction if same column, otherwise default to descending
+    if (currentSort.columnIndex === columnIndex) {
+        currentSort.direction = currentSort.direction === "desc" ? "asc" : "desc";
+    } else {
+        currentSort.direction = "desc";
+    }
+    currentSort.columnIndex = columnIndex;
 
     rows.sort((rowA, rowB) => {
         const cellA = rowA.cells[columnIndex];
@@ -1571,18 +1573,13 @@ function sortTable(columnIndex = null) {
         xValue = parseFloat(xValue) || 0;
         yValue = parseFloat(yValue) || 0;
 
-        return newDirection === "asc" ? xValue - yValue : yValue - xValue;
+        // Sort based on current direction
+        return currentSort.direction === "desc" ? yValue - xValue : xValue - yValue;
     });
 
     // Clear and repopulate tbody
     tableBody.innerHTML = '';
     rows.forEach(row => tableBody.appendChild(row));
-
-    // Update current sort state
-    currentSort = {
-        columnIndex,
-        direction: newDirection
-    };
 }
 
 // Initialize table with sorted data
@@ -1592,13 +1589,6 @@ window.onload = () => {
     fetchAndUpdateTableWithSorting();
 };
 
-// Add column header click event listeners
-document.addEventListener('DOMContentLoaded', () => {
-    const headers = document.querySelectorAll('th');
-    headers.forEach((header, index) => {
-        header.addEventListener('click', () => sortTable(index));
-    });
-});
 </script>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3347967694449901"
      crossorigin="anonymous"></script>
