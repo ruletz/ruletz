@@ -154,7 +154,7 @@ Wearables that monitor and adjust bodily conditions in real-time, such as temper
         });
 
         function fetchYoutubeVideo() {
-            fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=UCIM-WdLKUYMw-csqJXN5CnQ&order=date&type=video&key=YT_API_KEY.env`)
+            fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=UCIM-WdLKUYMw-csqJXN5CnQ&order=date&type=video&key=${process.env.YT_API_KEY}`)
                 .then(response => response.json())
                 .then(data => {
                     const videoId = data.items[0].id.videoId;
