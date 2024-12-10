@@ -98,7 +98,7 @@
 <body>
     <table>
         <thread>
-            <h1>Cryptocurrency Technical Comparison</h1>
+            <h1><button class="refresh-btn" onclick="refreshPage()">Cryptocurrency Technical Comparison</button></h1>
                 <th>Logo</th>
                 <th>Cryptocurrency</th>
                 <th onclick="sortTable(2)">TPS</th>
@@ -1544,37 +1544,32 @@ async function fetchAndUpdateTableWithSorting() {
 }
 
 function sortTable(columnIndex = null) {
-    if (columnIndex === null) {
-        processedData.sort((a, b) => b.score - a.score);
-        fetchAndUpdateTableWithSorting();
-        return;
-    }
-
     const tableBody = document.getElementById("cryptoTableBody");
     if (!tableBody) return;
 
     const rows = Array.from(tableBody.querySelectorAll("tr"));
 
-    // Toggle sort direction if same column, otherwise default to descending
+    // Toggle sort direction if the same column is clicked, default to descending for new column
     if (currentSort.columnIndex === columnIndex) {
         currentSort.direction = currentSort.direction === "desc" ? "asc" : "desc";
     } else {
+        currentSort.columnIndex = columnIndex;
         currentSort.direction = "desc";
     }
-    currentSort.columnIndex = columnIndex;
 
     rows.sort((rowA, rowB) => {
-        const cellA = rowA.cells[columnIndex];
-        const cellB = rowB.cells[columnIndex];
-        
-        let xValue = cellA.textContent.replace(/[^0-9.-]+/g, '');
-        let yValue = cellB.textContent.replace(/[^0-9.-]+/g, '');
-        
-        xValue = parseFloat(xValue) || 0;
-        yValue = parseFloat(yValue) || 0;
+        const cellA = rowA.cells[columnIndex]?.textContent.replace(/[^0-9.-]+/g, '') || '';
+        const cellB = rowB.cells[columnIndex]?.textContent.replace(/[^0-9.-]+/g, '') || '';
 
-        // Sort based on current direction
-        return currentSort.direction === "desc" ? yValue - xValue : xValue - yValue;
+        const xValue = parseFloat(cellA) || 0;
+        const yValue = parseFloat(cellB) || 0;
+
+        // Sort based on direction
+        if (currentSort.direction === "desc") {
+            return yValue - xValue;
+        } else {
+            return xValue - yValue;
+        }
     });
 
     // Clear and repopulate tbody
@@ -1582,9 +1577,8 @@ function sortTable(columnIndex = null) {
     rows.forEach(row => tableBody.appendChild(row));
 }
 
-// Initialize table with sorted data
+// Initialize table with sorted data by default (Score Column)
 window.onload = () => {
-    // Initial sort by score
     processedData.sort((a, b) => b.score - a.score);
     fetchAndUpdateTableWithSorting();
 };
