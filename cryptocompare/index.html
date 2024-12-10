@@ -1555,8 +1555,11 @@ function sortTable(columnIndex = null) {
 
     const rows = Array.from(tableBody.querySelectorAll("tr"));
 
-    // Determine sort direction
-    const isAscending = !(currentSort.columnIndex === columnIndex && currentSort.direction === "asc");
+    // Determine if we should sort in ascending or descending order
+    const isSameColumn = currentSort.columnIndex === columnIndex;
+    const newDirection = isSameColumn 
+        ? (currentSort.direction === "asc" ? "desc" : "asc") 
+        : "desc";
 
     rows.sort((rowA, rowB) => {
         const cellA = rowA.cells[columnIndex];
@@ -1568,7 +1571,7 @@ function sortTable(columnIndex = null) {
         xValue = parseFloat(xValue) || 0;
         yValue = parseFloat(yValue) || 0;
 
-        return isAscending ? xValue - yValue : yValue - xValue;
+        return newDirection === "asc" ? xValue - yValue : yValue - xValue;
     });
 
     // Clear and repopulate tbody
@@ -1578,17 +1581,18 @@ function sortTable(columnIndex = null) {
     // Update current sort state
     currentSort = {
         columnIndex,
-        direction: isAscending ? "asc" : "desc"
+        direction: newDirection
     };
 }
 
-// Initialize with score sorting
+// Initialize table with sorted data
 window.onload = () => {
+    // Initial sort by score
     processedData.sort((a, b) => b.score - a.score);
     fetchAndUpdateTableWithSorting();
 };
 
-// Add header click listeners
+// Add column header click event listeners
 document.addEventListener('DOMContentLoaded', () => {
     const headers = document.querySelectorAll('th');
     headers.forEach((header, index) => {
