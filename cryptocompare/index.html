@@ -1424,20 +1424,13 @@ const cleanedData = cleanData(data);
 console.log("Parsed Data:", cleanedData);
 
 function calculateScore(data) {
-    // Step 1: Ensure data is valid (non-null, non-undefined, and correctly structured)
-    const sanitizeData = (data) => {
-        return data.filter(item => item && item.name && item.tps != null && item.fees != null); // Ensure each item has necessary properties
-    };
-
-    const sanitizedData = sanitizeData(data);
-    
-    // If there is no valid data, we return an empty array
-    if (sanitizedData.length === 0) {
-        console.warn("Data is empty or invalid. Returning placeholder results.");
+    // Ensure we're working with an array
+    if (!Array.isArray(data)) {
+        console.error("Input must be an array");
         return [];
     }
 
-    // Step 2: Define metrics and ranking logic
+    // Define the metrics we want to rank
     const metrics = [
         { key: "tps", higher_is_better: true },
         { key: "fees", higher_is_better: false },
@@ -1445,55 +1438,45 @@ function calculateScore(data) {
         { key: "faultTolerance", higher_is_better: true },
         { key: "accessibilityScore", higher_is_better: true },
         { key: "protectedAgainstAttacks", higher_is_better: true },
-        { key: "energy", higher_is_better: false },
+        { key: "energy", higher_is_better: false }
     ];
 
-    // Step 3: Rank each metric
-    const ranks = [];
-    metrics.forEach(({ key, higher_is_better }) => {
-        const rankedItems = [];
-
-        sanitizedData.forEach((item) => {
-            const value = item[key]; // Access property directly
-            if (value != null) {
-                rankedItems.push({ name: item.name, value });
-            }
-        });
-
-        rankedItems.sort((a, b) => (higher_is_better ? b.value - a.value : a.value - b.value));
-
-        const metricRanks = [];
-        rankedItems.forEach((item, index) => {
-            metricRanks.push({
+    // Create a function to generate ranks for a specific metric
+    const getRanks = (metric, data) => {
+        // Create a copy of the data to sort
+        return [...data]
+            .sort((a, b) => 
+                metric.higher_is_better 
+                    ? b[metric.key] - a[metric.key] 
+                    : a[metric.key] - b[metric.key]
+            )
+            .map((item, index) => ({
                 name: item.name,
-                rank: index + 1,
-            });
-        });
+                rank: index + 1
+            }));
+    };
 
-        ranks.push(metricRanks);
-    });
+    // Generate ranks for each metric
+    const metricRanks = metrics.map(metric => 
+        getRanks(metric, data)
+    );
 
-    // Step 4: Calculate average score for each item
-    const rankedItemsWithScores = [];
-    sanitizedData.forEach((item) => {
-        let totalRank = 0;
+    // Calculate final scores
+    return data.map(item => {
+        // Sum the ranks across all metrics
+        const totalRank = metricRanks.reduce((sum, metricRank) => {
+            const itemRank = metricRank.find(r => r.name === item.name)?.rank || data.length;
+            return sum + itemRank;
+        }, 0);
 
-        metrics.forEach((_, index) => {
-            const rank = ranks[index].find((r) => r.name === item.name)?.rank;
-            if (rank != null) {
-                totalRank += rank;
-            }
-        });
+        // Calculate average rank
+        const totalScore = totalRank / metrics.length;
 
-        const averageScore = totalRank / metrics.length;
-
-        rankedItemsWithScores.push({
+        return {
             ...item,
-            score: averageScore, // Score = average rank
-        });
-    });
-
-    return rankedItemsWithScores;
+            score: totalScore
+        };
+    }).sort((a, b) => a.score - b.score); // Sort by score (lower is better)
 }
     
 const processedData = cleanedData.map(calculateScore);
