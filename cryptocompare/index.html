@@ -1452,7 +1452,7 @@ function calculateScore(data) {
 
     // Step 3: Use rank directly as score for each item
     const rankItemsWithScores = data.map(item => {
-        let totalScore = 0;
+        let totalRank = 0;
 
         // Loop over each metric's ranking and sum the ranks
         metrics.forEach((metric, index) => {
