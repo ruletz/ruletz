@@ -1437,13 +1437,14 @@ function calculateScore(data) {
 
     // Step 2: Rank each metric
     const ranks = [];
-    metrics.forEach(({ key, higher_is_better }) => {
+    for (let i = 0; i < metrics.length; i++) {
+        const { key, higher_is_better } = metrics[i];
         const rankedItems = [];
 
-        // Directly process data, assuming it's in a valid iterable format
-        for (const item of data) {
-            if (item[key] !== null && item[key] !== undefined) {
-                rankedItems.push({ name: item.name, value: item[key] });
+        // Loop through data manually since it's not iterable
+        for (const item in data) {
+            if (data[item][key] !== null && data[item][key] !== undefined) {
+                rankedItems.push({ name: data[item].name, value: data[item][key] });
             }
         }
 
@@ -1452,37 +1453,37 @@ function calculateScore(data) {
 
         // Assign ranks
         const metricRanks = [];
-        rankedItems.forEach((item, index) => {
+        for (let j = 0; j < rankedItems.length; j++) {
             metricRanks.push({
-                name: item.name,
-                rank: index + 1,
+                name: rankedItems[j].name,
+                rank: j + 1,
             });
-        });
+        }
 
         ranks.push(metricRanks);
-    });
+    }
 
     // Step 3: Calculate average score for each item
     const rankedItemsWithScores = [];
-    data.forEach((item) => {
+    for (const item in data) {
         let totalRank = 0;
 
         // Calculate total rank for each metric
-        metrics.forEach((_, index) => {
-            const rank = ranks[index].find((r) => r.name === item.name)?.rank;
+        for (let i = 0; i < metrics.length; i++) {
+            const rank = ranks[i].find((r) => r.name === data[item].name)?.rank;
             if (rank) {
                 totalRank += rank;
             }
-        });
+        }
 
         // Calculate average score
         const totalScore = totalRank / metrics.length;
 
         rankedItemsWithScores.push({
-            ...item,
+            ...data[item],
             score: totalScore,  // Score is the average rank
         });
-    });
+    }
 
     return rankedItemsWithScores;
 }
