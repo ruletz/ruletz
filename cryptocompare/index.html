@@ -1424,7 +1424,7 @@ const cleanedData = cleanData(data);
 console.log("Parsed Data:", cleanedData);
 
 function calculateScore(data) {
-    // Step 1: Define metrics and ranking logic
+    // Metrics configuration
     const metrics = [
         { key: "tps", higher_is_better: true },
         { key: "fees", higher_is_better: false },
@@ -1436,40 +1436,55 @@ function calculateScore(data) {
     ];
 
     // Step 2: Rank each metric
-    const ranks = metrics.map(({ key, higher_is_better }) => {
-        // Rank by the given metric
-        const rankedItems = data
-            .map(item => ({ name: item.name, value: item[key] }))
-            .filter(item => item.value !== null && item.value !== undefined) // Exclude invalid values
-            .sort((a, b) => higher_is_better ? b.value - a.value : a.value - b.value); // Sort by metric
+    const ranks = [];
+    metrics.forEach(({ key, higher_is_better }) => {
+        const rankedItems = [];
 
-        // Assign ranks based on the sorted list (Rank 1 is the best, Rank N is the worst)
-        return rankedItems.map((item, index) => ({
-            name: item.name,
-            rank: index + 1, // Rank is 1-based, so first item gets rank 1
-        }));
+        // Directly process data, assuming it's in a valid iterable format
+        for (const item of data) {
+            if (item[key] !== null && item[key] !== undefined) {
+                rankedItems.push({ name: item.name, value: item[key] });
+            }
+        }
+
+        // Sort based on the metric and whether higher is better
+        rankedItems.sort((a, b) => (higher_is_better ? b.value - a.value : a.value - b.value));
+
+        // Assign ranks
+        const metricRanks = [];
+        rankedItems.forEach((item, index) => {
+            metricRanks.push({
+                name: item.name,
+                rank: index + 1,
+            });
+        });
+
+        ranks.push(metricRanks);
     });
 
-    // Step 3: Use rank directly as score for each item
-    const rankItemsWithScores = data.map(item => {
+    // Step 3: Calculate average score for each item
+    const rankedItemsWithScores = [];
+    data.forEach((item) => {
         let totalRank = 0;
 
-        // Loop over each metric's ranking and sum the ranks
-        metrics.forEach((metric, index) => {
-            const rank = ranks[index].find(r => r.name === item.name)?.rank; // Get the rank for the current item
+        // Calculate total rank for each metric
+        metrics.forEach((_, index) => {
+            const rank = ranks[index].find((r) => r.name === item.name)?.rank;
             if (rank) {
-                totalRank += rank; // Add the rank to the total score
+                totalRank += rank;
             }
         });
 
-        // Final score is the sum of all ranks (average if necessary)
-        const totalScore = totalRank / metrics.length; // Optional: Adjust based on number of metrics
+        // Calculate average score
+        const totalScore = totalRank / metrics.length;
 
-        // Return the item with its score
-        return { ...item, score: totalScore };
+        rankedItemsWithScores.push({
+            ...item,
+            score: totalScore,  // Score is the average rank
+        });
     });
 
-    return rankItemsWithScores;
+    return rankedItemsWithScores;
 }
     
 const processedData = cleanedData.map(calculateScore);
