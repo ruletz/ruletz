@@ -1472,7 +1472,9 @@ function calculateScore(data) {
             score: totalScore,
         };
     };
-    
+    const processedData = data.map(rankItemsWithScores);
+    return processedData;
+}
     
 const processedData = cleanedData.map(calculateScore);
 
