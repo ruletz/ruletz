@@ -1439,13 +1439,13 @@ function calculateScore(data) {
     const ranks = metrics.map(({ key, higher_is_better }) => {
         // Rank by the given metric
         const rankedItems = data
-            .map(item => ({ id: item.id, value: item[key] }))
+            .map(item => ({ name: item.name, value: item[key] }))
             .filter(item => item.value !== null && item.value !== undefined) // Exclude invalid values
             .sort((a, b) => higher_is_better ? b.value - a.value : a.value - b.value); // Sort by metric
 
         // Assign ranks based on the sorted list (Rank 1 is the best, Rank N is the worst)
         return rankedItems.map((item, index) => ({
-            id: item.id,
+            name: item.name,
             rank: index + 1, // Rank is 1-based, so first item gets rank 1
         }));
     });
@@ -1456,7 +1456,7 @@ function calculateScore(data) {
 
         // Loop over each metric's ranking and sum the ranks
         metrics.forEach((metric, index) => {
-            const rank = ranks[index].find(r => r.id === item.id)?.rank; // Get the rank for the current item
+            const rank = ranks[index].find(r => r.name === item.name)?.rank; // Get the rank for the current item
             if (rank) {
                 totalRank += rank; // Add the rank to the total score
             }
