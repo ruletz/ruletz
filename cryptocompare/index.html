@@ -1333,7 +1333,7 @@
    }
 ];
 
-let items = data.lenght;
+// Function to clean data
 // Function to clean data
 function parseRange(value) {
     if (typeof value === 'string') {
@@ -1423,62 +1423,61 @@ const cleanedData = cleanData(data);
 // Log the parsed data
 console.log("Parsed Data:", cleanedData);
 
-function calculateScore(data) {
-    // Ensure we're working with an array
-    if (!Array.isArray(data)) {
-        console.error("Input must be an array");
-        return [];
-    }
+const maxValues = {
+    tps: Math.max(...cleanedData.map(item => item.tps).filter(val => val !== null && val !== undefined)),
+    fees: Math.min(...cleanedData.map(item => item.fees).filter(val => val !== null && val !== undefined)),
+    finality: Math.min(...cleanedData.map(item => item.finality).filter(val => val !== null && val !== undefined)),
+    faultTolerance: Math.max(...cleanedData.map(item => item.faultTolerance).filter(val => val !== null && val !== undefined)),
+    accessibilityScore: Math.max(...cleanedData.map(item => item.accessibilityScore).filter(val => val !== null && val !== undefined)),
+    protectedAgainstAttacks: Math.max(...cleanedData.map(item => item.protectedAgainstAttacks).filter(val => val !== null && val !== undefined)),
+    energy: Math.min(...cleanedData.map(item => item.energy).filter(val => val !== null && val !== undefined))
+};
 
-    // Define the metrics we want to rank
-    const metrics = [
-        { key: "tps", higher_is_better: true },
-        { key: "fees", higher_is_better: false },
-        { key: "finality", higher_is_better: false },
-        { key: "faultTolerance", higher_is_better: true },
-        { key: "accessibilityScore", higher_is_better: true },
-        { key: "protectedAgainstAttacks", higher_is_better: true },
-        { key: "energy", higher_is_better: false }
-    ];
+function calculateScore(item) {
+    const getScore = (value, maxValue, higher_is_better = true) => {
+        if (value === null || value === undefined) return 0;
+        
+        if (maxValue === Infinity  || !isFinite(maxValue)) {maxValue = 100;}
+        else if (isFinite(maxValue)) {
+            maxValue = Math.max(...Object.values(maxValues).filter(isFinite));
+        }
 
-    // Create a function to generate ranks for a specific metric
-    const getRanks = (metric, data) => {
-        // Create a copy of the data to sort
-        return [...data]
-            .sort((a, b) => 
-                metric.higher_is_better 
-                    ? b[metric.key] - a[metric.key] 
-                    : a[metric.key] - b[metric.key]
-            )
-            .map((item, index) => ({
-                name: item.name,
-                rank: index + 1
-            }));
+        return higher_is_better
+            ? value
+            : value / maxValue;
     };
 
-    // Generate ranks for each metric
-    const metricRanks = metrics.map(metric => 
-        getRanks(metric, data)
-    );
+    // Calculate individual scores
+    const tpsScore = getScore(item.tps, maxValues.tps, true);
+    const feesScore = getScore(item.fees, maxValues.fees, false);
+    const finalityScore = getScore(item.finality, maxValues.finality, false);
+    const faultToleranceScore = getScore(item.faultTolerance, maxValues.faultTolerance, true);
+    const accessibilityScore = getScore(item.accessibilityScore, maxValues.accessibilityScore, true);
+    const protectionScore = getScore(item.protectedAgainstAttacks, maxValues.protectedAgainstAttacks, true);
+    const energyScore = getScore(item.energy, maxValues.energy, false);
 
-    // Calculate final scores
-    return data.map(item => {
-        // Sum the ranks across all metrics
-        const totalRank = metricRanks.reduce((sum, metricRank) => {
-            const itemRank = metricRank.find(r => r.name === item.name)?.rank || data.length;
-            return sum + itemRank;
-        }, 0);
+    const totalScore = tpsScore + finalityScore + faultToleranceScore + accessibilityScore + protectionScore - feesScore - energyScore;
 
-        // Calculate average rank
-        const totalScore = totalRank / metrics.length;
 
-        return {
+    // Log calculation details
+    console.log(`
+        Calculating score for ${item.name}:
+        TPS Score: ${tpsScore} (Value: ${item.tps}, Max: ${maxValues.tps}),
+        Fees Score: ${feesScore} (Value: ${item.fees}, Max: ${maxValues.fees}),
+        Finality Score: ${finalityScore} (Value: ${item.finality}, Max: ${maxValues.finality}),
+        Fault Tolerance Score: ${faultToleranceScore} (Value: ${item.faultTolerance}, Max: ${maxValues.faultTolerance}),
+        Accessibility Score: ${accessibilityScore} (Value: ${item.accessibilityScore}, Max: ${maxValues.accessibilityScore}),
+        Protection Score: ${protectionScore} (Value: ${item.protectedAgainstAttacks}, Max: ${maxValues.protectedAgainstAttacks}),
+        Energy Score: ${energyScore} (Value: ${item.energy}, Max: ${maxValues.energy}),
+        Total Score: ${totalScore},
+    `);
+
+    return {
             ...item,
-            score: totalScore
-        };
-    }).sort((a, b) => a.score - b.score); // Sort by score (lower is better)
+            score: totalScore,
+    };
 }
-    
+
 const processedData = cleanedData.map(calculateScore);
 
 let currentSort = { columnIndex: null, direction: "desc" }; // Default: Sort by score (not a column)
@@ -1512,8 +1511,8 @@ async function fetchAndUpdateTableWithSorting() {
 
             // Calculate divergence dynamically
             const divergence = price && item.score
-                ? (items / item.score) / price.toString()
-                : (items / item.score) / item.price;
+                ? (item.score / price).toString()
+                : (item.score) / item.price;
 
             // Create and populate the table row
             const row = document.createElement("tr");
