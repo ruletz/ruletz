@@ -1437,43 +1437,39 @@ function calculateScore(data) {
 
     // Step 2: Rank each metric
     const ranks = metrics.map(({ key, higher_is_better }) => {
-        return data
-            .map((item) => ({ id: item.id, value: item[key] }))
+        // Rank by the given metric
+        const rankedItems = data
+            .map(item => ({ id: item.id, value: item[key] }))
             .filter(item => item.value !== null && item.value !== undefined) // Exclude invalid values
-            .sort((a, b) => higher_is_better ? b.value - a.value : a.value - b.value) // Sort by metric
-            .map((item, rank) => ({ id: item.id, rank: rank + 1 })); // Assign ranks
+            .sort((a, b) => higher_is_better ? b.value - a.value : a.value - b.value); // Sort by metric
+
+        // Assign ranks based on the sorted list (Rank 1 is the best, Rank N is the worst)
+        return rankedItems.map((item, index) => ({
+            id: item.id,
+            rank: index + 1, // Rank is 1-based, so first item gets rank 1
+        }));
     });
 
-    // Step 3: Calculate the score for each item based on ranks
-    const rankItemsWithScores = (item) => {
-        const getScore = (rank, higher_is_better = true) => {
-            if (rank === null || rank === undefined) return 0;
+    // Step 3: Use rank directly as score for each item
+    const rankItemsWithScores = data.map(item => {
+        let totalScore = 0;
 
-            // Higher ranks (better performance) get a higher score
-            return higher_is_better
-                ? 100 - (rank - 1) * (100 / data.length)
-                : (rank - 1) * (100 / data.length);
-        };
+        // Loop over each metric's ranking and sum the ranks
+        metrics.forEach((metric, index) => {
+            const rank = ranks[index].find(r => r.id === item.id)?.rank; // Get the rank for the current item
+            if (rank) {
+                totalRank += rank; // Add the rank to the total score
+            }
+        });
 
-        const tpsScore = getScore(ranks[0].find(r => r.id === item.id)?.rank, true);
-        const feesScore = getScore(ranks[1].find(r => r.id === item.id)?.rank, false);
-        const finalityScore = getScore(ranks[2].find(r => r.id === item.id)?.rank, false);
-        const faultToleranceScore = getScore(ranks[3].find(r => r.id === item.id)?.rank, true);
-        const accessibilityScore = getScore(ranks[4].find(r => r.id === item.id)?.rank, true);
-        const protectionScore = getScore(ranks[5].find(r => r.id === item.id)?.rank, true);
-        const energyScore = getScore(ranks[6].find(r => r.id === item.id)?.rank, false);
+        // Final score is the sum of all ranks (average if necessary)
+        const totalScore = totalRank / metrics.length; // Optional: Adjust based on number of metrics
 
-        // Final score is the sum of all individual scores
-        const totalScore = tpsScore + finalityScore + faultToleranceScore + accessibilityScore + protectionScore + feesScore + energyScore / 7;
+        // Return the item with its score
+        return { ...item, score: totalScore };
+    });
 
-        // Return item with its score
-        return {
-            ...item,
-            score: totalScore,
-        };
-    };
-    const processedData = data.map(rankItemsWithScores);
-    return processedData;
+    return rankItemsWithScores;
 }
     
 const processedData = cleanedData.map(calculateScore);
