@@ -1424,20 +1424,20 @@ const cleanedData = cleanData(data);
 console.log("Parsed Data:", cleanedData);
 
 function calculateScore(data) {
-    const normalizeToArray = (data) => {
-        if (Array.isArray(data)) return data;
-        if (typeof data === "object" && data !== null) return Object.values(data);
-        console.error("Data is not iterable. Received:", data);
-        return [];
+    // Step 1: Ensure data is valid (non-null, non-undefined, and correctly structured)
+    const sanitizeData = (data) => {
+        return data.filter(item => item && item.name && item.tps != null && item.fees != null); // Ensure each item has necessary properties
     };
 
-    const normalizedData = normalizeToArray(data);
-
-    if (normalizedData.length === 0) {
+    const sanitizedData = sanitizeData(data);
+    
+    // If there is no valid data, we return an empty array
+    if (sanitizedData.length === 0) {
         console.warn("Data is empty or invalid. Returning placeholder results.");
         return [];
     }
 
+    // Step 2: Define metrics and ranking logic
     const metrics = [
         { key: "tps", higher_is_better: true },
         { key: "fees", higher_is_better: false },
@@ -1448,26 +1448,24 @@ function calculateScore(data) {
         { key: "energy", higher_is_better: false },
     ];
 
-    // Step 2: Rank each metric
+    // Step 3: Rank each metric
     const ranks = [];
     metrics.forEach(({ key, higher_is_better }) => {
         const rankedItems = [];
 
-        normalizedData.forEach((item) => {
-            // Safely access property value, check if it's not null or undefined
-            const value = item[key] ?? null;  // Default to null if undefined or missing
-            if (value !== null) {
-                rankedItems.push({ id: item.id, value });
+        sanitizedData.forEach((item) => {
+            const value = item[key]; // Access property directly
+            if (value != null) {
+                rankedItems.push({ name: item.name, value });
             }
         });
 
-        // Sort based on metric value
         rankedItems.sort((a, b) => (higher_is_better ? b.value - a.value : a.value - b.value));
 
         const metricRanks = [];
         rankedItems.forEach((item, index) => {
             metricRanks.push({
-                id: item.id,
+                name: item.name,
                 rank: index + 1,
             });
         });
@@ -1475,30 +1473,28 @@ function calculateScore(data) {
         ranks.push(metricRanks);
     });
 
-    // Step 3: Calculate average score for each item
+    // Step 4: Calculate average score for each item
     const rankedItemsWithScores = [];
-    normalizedData.forEach((item) => {
+    sanitizedData.forEach((item) => {
         let totalRank = 0;
 
         metrics.forEach((_, index) => {
-            // Find the rank for this item in each metric
-            const rank = ranks[index].find((r) => r.id === item.id)?.rank;
-            if (rank !== undefined) {
+            const rank = ranks[index].find((r) => r.name === item.name)?.rank;
+            if (rank != null) {
                 totalRank += rank;
             }
         });
 
-        const totalScore = totalRank / metrics.length;
+        const averageScore = totalRank / metrics.length;
 
         rankedItemsWithScores.push({
             ...item,
-            score: totalScore, // Score = average rank
+            score: averageScore, // Score = average rank
         });
     });
 
     return rankedItemsWithScores;
 }
-
     
 const processedData = cleanedData.map(calculateScore);
 
