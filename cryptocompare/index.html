@@ -1434,18 +1434,17 @@ const maxValues = {
 };
 
 function calculateScore(item) {
-    const getScore = (value, maxValue, higher_is_better = true) => {
-        if (value === null || value === undefined) return 0;
-        
-        if (maxValue === Infinity  || !isFinite(maxValue)) {maxValue = 100;}
-        else if (isFinite(maxValue)) {
-            maxValue = Math.max(...Object.values(maxValues).filter(isFinite));
+    const getScore = (value, maxValue) => {
+        if (value === null || value === undefined || value <= 0) return 0;
+
+    // Handle Infinity or non-finite maxValue by setting it to 1.
+        if (maxValue === Infinity || !isFinite(maxValue)) {
+        maxValue = 1;
         }
 
-        return higher_is_better
-            ? value
-            : value / maxValue;
-    };
+    // Calculate the score as value / maxValue.
+        return value / maxValue;
+        };
 
     // Calculate individual scores
     const tpsScore = getScore(item.tps, maxValues.tps, true);
