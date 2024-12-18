@@ -1425,12 +1425,12 @@ console.log("Parsed Data:", cleanedData);
 
 const maxValues = {
     tps: Math.max(...cleanedData.map(item => item.tps).filter(val => val !== null && val !== undefined)),
-    fees: Math.min(...cleanedData.map(item => item.fees).filter(val => val !== null && val !== undefined)),
+    fees: Math.max(...cleanedData.map(item => item.fees).filter(val => val !== null && val !== undefined)),
     finality: Math.min(...cleanedData.map(item => item.finality).filter(val => val !== null && val !== undefined)),
     faultTolerance: Math.max(...cleanedData.map(item => item.faultTolerance).filter(val => val !== null && val !== undefined)),
     accessibilityScore: Math.max(...cleanedData.map(item => item.accessibilityScore).filter(val => val !== null && val !== undefined)),
     protectedAgainstAttacks: Math.max(...cleanedData.map(item => item.protectedAgainstAttacks).filter(val => val !== null && val !== undefined)),
-    energy: Math.min(...cleanedData.map(item => item.energy).filter(val => val !== null && val !== undefined))
+    energy: Math.max(...cleanedData.map(item => item.energy).filter(val => val !== null && val !== undefined))
 };
 
 function calculateScore(item) {
