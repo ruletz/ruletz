@@ -1426,7 +1426,7 @@ console.log("Parsed Data:", cleanedData);
 const maxValues = {
     tps: Math.max(...cleanedData.map(item => item.tps).filter(val => val !== null && val !== undefined)),
     fees: Math.max(...cleanedData.map(item => item.fees).filter(val => val !== null && val !== undefined)),
-    finality: Math.min(...cleanedData.map(item => item.finality).filter(val => val !== null && val !== undefined)),
+    finality: Math.max(...cleanedData.map(item => item.finality).filter(val => val !== null && val !== undefined)),
     faultTolerance: Math.max(...cleanedData.map(item => item.faultTolerance).filter(val => val !== null && val !== undefined)),
     accessibilityScore: Math.max(...cleanedData.map(item => item.accessibilityScore).filter(val => val !== null && val !== undefined)),
     protectedAgainstAttacks: Math.max(...cleanedData.map(item => item.protectedAgainstAttacks).filter(val => val !== null && val !== undefined)),
@@ -1450,12 +1450,12 @@ function calculateScore(item) {
     const tpsScore = getScore(item.tps, maxValues.tps, true);
     const feesScore = getScore(item.fees, maxValues.fees, false);
     const finalityScore = getScore(item.finality, maxValues.finality, false);
-    const faultToleranceScore = getScore(item.faultTolerance, maxValues.faultTolerance, true);
+    const faultToleranceScore = getScore(item.faultTolerance, maxValues.faultTolerance, false);
     const accessibilityScore = getScore(item.accessibilityScore, maxValues.accessibilityScore, true);
     const protectionScore = getScore(item.protectedAgainstAttacks, maxValues.protectedAgainstAttacks, true);
     const energyScore = getScore(item.energy, maxValues.energy, false);
 
-    const totalScore = tpsScore + finalityScore + faultToleranceScore + accessibilityScore + protectionScore - feesScore - energyScore;
+    const totalScore = tpsScore + finalityScore - faultToleranceScore + accessibilityScore + protectionScore - feesScore - energyScore;
 
 
     // Log calculation details
