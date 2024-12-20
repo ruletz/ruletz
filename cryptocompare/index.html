@@ -1424,7 +1424,7 @@ const cleanedData = cleanData(data);
 console.log("Parsed Data:", cleanedData);
 
 const maxValues = {
-    tps: Math.max(...cleanedData.map(item => item.tps).filter(val => val !== null && val !== undefined)),
+    tps: Math.max(...cleanedData.map(item => item.maxTheoreticalTps).filter(val => val !== null && val !== undefined)),
     fees: Math.max(...cleanedData.map(item => item.fees).filter(val => val !== null && val !== undefined)),
     finality: Math.max(...cleanedData.map(item => item.finality).filter(val => val !== null && val !== undefined)),
     faultTolerance: Math.max(...cleanedData.map(item => item.faultTolerance).filter(val => val !== null && val !== undefined)),
