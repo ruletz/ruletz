@@ -1510,7 +1510,7 @@ async function fetchAndUpdateTableWithSorting() {
             const price = apiItem?.price || "N/A";
 
             // Calculate divergence dynamically
-            const divergence = price && item.score
+            const divergency = price && item.score
                 ? (item.score / price).toString()
                 : (item.score) / item.price;
                 
@@ -1536,7 +1536,7 @@ async function fetchAndUpdateTableWithSorting() {
                 <td class="comment">${item.comment || "N/A"}</td>
                 <td class="comment"><a href="${item.whitepaper}" target="_blank">${item.whitepaper !== 'N/A' ? item.whitepaper : ''}</a></td>
                 <td class="price-cell" data-rate="${price}">${price !== 'N/A' ? price : item.price}</td>
-                <td class="divergency-cell">${divergence}</td>
+                <td class="divergency-cell">${divergency}</td>
                 <td>${correct} || "N/A"</td>`;
             tableBody.appendChild(row);
         });
