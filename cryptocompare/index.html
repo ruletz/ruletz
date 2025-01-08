@@ -1514,7 +1514,7 @@ async function fetchAndUpdateTableWithSorting() {
                 ? (item.score / price).toString()
                 : (item.score) / item.price;
                 
-            const correct = price * divergency
+            const correct = price * divergency;
 
             // Create and populate the table row
             const row = document.createElement("tr");
