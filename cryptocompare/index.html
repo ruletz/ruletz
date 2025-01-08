@@ -1537,7 +1537,7 @@ async function fetchAndUpdateTableWithSorting() {
                 <td class="comment"><a href="${item.whitepaper}" target="_blank">${item.whitepaper !== 'N/A' ? item.whitepaper : ''}</a></td>
                 <td class="price-cell" data-rate="${price}">${price !== 'N/A' ? price : item.price}</td>
                 <td class="divergency-cell">${divergency}</td>
-                <td>${correct ||"N/A"}</td>`;
+                <td>${correct.toFixed(2) ||"N/A"}</td>`;
             tableBody.appendChild(row);
         });
 
