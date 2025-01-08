@@ -115,6 +115,7 @@
                 <th>Comment</th>
                 <th onclick="sortTable(14)">Price</th>
                 <th onclick="sortTable(15)">PriceDiscrepancy</th>
+                <th onclick="sortTable(16)">Corrected Price</th>
                 <!-- <th class="score-column">Score</th> -->
         </thread>
         <tbody id="cryptoTableBody">
@@ -1512,6 +1513,8 @@ async function fetchAndUpdateTableWithSorting() {
             const divergence = price && item.score
                 ? (item.score / price).toString()
                 : (item.score) / item.price;
+                
+            const correct = price * divergency
 
             // Create and populate the table row
             const row = document.createElement("tr");
@@ -1533,7 +1536,8 @@ async function fetchAndUpdateTableWithSorting() {
                 <td class="comment">${item.comment || "N/A"}</td>
                 <td class="comment"><a href="${item.whitepaper}" target="_blank">${item.whitepaper !== 'N/A' ? item.whitepaper : ''}</a></td>
                 <td class="price-cell" data-rate="${price}">${price !== 'N/A' ? price : item.price}</td>
-                <td class="divergency-cell">${divergence}</td>`;
+                <td class="divergency-cell">${divergence}</td>
+                <td>${correct} || "N/A"</td>`;
             tableBody.appendChild(row);
         });
 
