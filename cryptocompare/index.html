@@ -1516,13 +1516,15 @@ async function fetchAndUpdateTableWithSorting() {
 
             // Extract API rate or fallback to "N/A"
             const cap = apiItem?.cap || "N/A";
-
-            // Calculate divergence dynamically
+            
+            // Calculate divergency dynamically
             const divergency = cap && item.score
-                ? (item.score / cap).toString()
-                : (item.score) / item.cap;
+                ? (item.cap / score).toString()
+                : (item.cap) / item.score;
                 
-            const correct = cap * divergency;
+            //const mincap = MathMin(divergency);
+                
+            const correct = 163843827.95851055 * divergency;
 
             // Create and populate the table row
             const row = document.createElement("tr");
