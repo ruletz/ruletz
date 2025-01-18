@@ -1511,12 +1511,12 @@ async function fetchAndUpdateTableWithSorting() {
             );
 
             // Extract API rate or fallback to "N/A"
-            const price = apiItem?.price || "N/A";
+            const cap = apiItem?.cap || "N/A";
 
             // Calculate divergence dynamically
-            const divergency = price && item.score
-                ? (item.score / price).toString()
-                : (item.score) / item.price;
+            const divergency = cap && item.score
+                ? (item.score / cap).toString()
+                : (item.score) / item.cap;
                 
             const correct = price * divergency;
 
