@@ -121,9 +121,9 @@
                 <th onclick="sortTable(11)">Protection Score</th>
                 <th>Source</th>
                 <th>Comment</th>
-                <th onclick="sortTable(14)">Cap</th>
-                <th onclick="sortTable(15)">MarketCapDiscrepancy</th>
-                <th onclick="sortTable(16)">Corrected Cap</th>
+                <th onclick="sortTable(14)">Price</th>
+                <th onclick="sortTable(15)">PriceDiscrepancy</th>
+                <th onclick="sortTable(16)">Corrected Price</th>
                 <!-- <th class="score-column">Score</th> -->
         </thread>
         <tbody id="cryptoTableBody">
@@ -1515,16 +1515,14 @@ async function fetchAndUpdateTableWithSorting() {
             );
 
             // Extract API rate or fallback to "N/A"
-            const cap = apiItem?.cap || "N/A";
-            
-            // Calculate divergency dynamically
-            const divergency = cap && item.score
-                ? (item.cap / score).toString()
-                : (item.cap) / item.score;
+            const price = apiItem?.price || "N/A";
+
+            // Calculate divergence dynamically
+            const divergency = price && item.score
+                ? (item.score / price).toString()
+                : (item.score) / item.price;
                 
-            //const mincap = MathMin(divergency);
-                
-            const correct = 163843827.95851055 * divergency;
+            const correct = price * divergency;
 
             // Create and populate the table row
             const row = document.createElement("tr");
@@ -1545,9 +1543,9 @@ async function fetchAndUpdateTableWithSorting() {
                 <td>${item.protectedAgainstAttacks || "N/A"}</td>
                 <td class="comment">${item.comment || "N/A"}</td>
                 <td class="comment"><a href="${item.whitepaper}" target="_blank">${item.whitepaper !== 'N/A' ? item.whitepaper : ''}</a></td>
-                <td class="cap-cell" data-rate="${cap}">${cap !== 'N/A' ? cap : item.cap}</td>
+                <td class="price-cell" data-rate="${price}">${price !== 'N/A' ? price : item.price}</td>
                 <td class="divergency-cell">${divergency}</td>
-                <td class="${cap < 0 ? 'negative' : 'positive'}">${correct.toFixed(2) ||"N/A"}</td>`;
+                <td class="${price < 0 ? 'negative' : 'positive'}">${correct.toFixed(2) ||"N/A"}</td>`;
             tableBody.appendChild(row);
         });
 
