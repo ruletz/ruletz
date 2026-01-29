@@ -20,19 +20,21 @@
             margin: 0;
             display: flex;
             flex-direction: column;
-            align-items: center;
+			align-items: center;
+			justify-content: center;
             min-height: 100vh;
         }
 
         .title {
-            font-size: clamp(32px, 10vw, 64px);
+			font-size: clamp(32px, 10vw, 64px);
             font-weight: bold;
             cursor: pointer;
-            margin-top: 110px;
-            margin-bottom: 40px;
             user-select: none;
+			margin-bottom: 4vh;
+			margin-top: 11vh;
+			z-index: 10;
         }
-
+		
         .container {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -52,14 +54,13 @@
             font-size: 1.5rem;
             font-weight: bold;
             cursor: pointer;
-            transition: transform 0.1s, color 0.3s, border-color 0.3s;
             text-align: center;
             text-decoration: none;
             color: inherit;
         }
 
         .button:active { transform: scale(0.98); }
-        .button.turquoise:hover { border-color: turquoise; color: turquoise; }
+        .button.turquoise:hover { border-color: turquoise; color: turquoise; transition: transform 0.1s, color 0.3s, border-color 0.3s;}
         .button.red:hover { border-color: red; color: red; }
 
         .box {
@@ -74,7 +75,8 @@
             padding: 30px;
             box-sizing: border-box;
             overflow-y: auto;
-            display: none;
+			padding: 30px;
+			display: none;
         }
 
         .trademark {
@@ -83,15 +85,27 @@
             opacity: 0.7;
         }
 
-        @media (max-width: 768px) {
-            .container { grid-template-columns: 1fr; }
-            .button { aspect-ratio: auto; padding: 20px; }
-        }
+        @media screen and (max-width: 768px) {
+            .container { 
+				grid-template-columns: 1fr;
+			}
+			
+			.box {
+				position: relative;
+				margin-top: 10px;
+			}
+			
+			.button {
+				container-type: inline-size;
+				font-size: 8cqi;
+			}
+		}
+    }
     </style>
 </head>
 <body>
-
-    <div class="title" onclick="location.reload()">RULETA</div>
+	
+	<div class="title" onclick="location.reload()">RULETA</div>
 
     <div class="container" id="mainContainer">
         <div class="button" onclick="toggleContent(event, 'content1')">LIFE</div>
