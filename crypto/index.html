@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https://cdn.jsdelivr.net https://api.qrserver.com https://assets.coingecko.com data:; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'self' wss: https:;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https://cdn.jsdelivr.net https://assets.coingecko.com data:; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'self' wss: https:;">
     <meta name="referrer" content="no-referrer">
     <meta http-equiv="X-XSS-Protection" content="1; mode=block">
     <title>Crypto Wallets</title>
@@ -122,7 +122,6 @@
             padding-top: 0;
         }
 
-        /* Coin Info & Seamless (ETH Network) Expansion */
         .coin-info {
             display: flex;
             align-items: center;
@@ -156,7 +155,6 @@
             white-space: nowrap;
         }
 
-        /* Removed colors to perfectly match original plain white bold styling */
         .net-ext {
             display: inline-block;
             max-width: 0;
@@ -172,7 +170,6 @@
             opacity: 1;
         }
 
-        /* Address Container */
         .address-container {
             position: relative;
             display: flex;
@@ -220,43 +217,6 @@
             opacity: 1;
             transform: translateX(0);
         }
-
-        /* Hidden QR Code Pop-up */
-        .qr-wrapper {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 0;
-            height: 0;
-        }
-
-        .qr-thumb {
-            position: absolute;
-            left: 12px;
-            top: 50%;
-            transform: translateY(-50%) scale(0.8);
-            width: 75px;
-            height: 75px;
-            border-radius: 6px;
-            background-color: #141414;
-            border: 1px solid #ff66b2;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.9), 0 0 12px rgba(255, 102, 178, 0.3);
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-            transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
-            z-index: 99;
-        }
-
-        /* Triggers QR on desktop hover */
-        @media (hover: hover) {
-            .address-container:hover .qr-thumb {
-                opacity: 1;
-                visibility: visible;
-                transform: translateY(-50%) scale(1);
-            }
-        }
         
         .copy-feedback {
             font-size: 0.85rem;
@@ -270,47 +230,16 @@
             flex-shrink: 0;
         }
 
-        /* Mobile Layout */
         @media (max-width: 640px) {
-            body {
-                padding: 20px 10px;
-            }
-            .header-bar {
-                margin-bottom: 18px;
-            }
-            .connect-btn {
-                padding: 10px 20px;
-                font-size: 0.88rem;
-            }
-            .wallet-card {
-                padding: 18px 14px;
-                border-radius: 12px;
-            }
-            .asset {
-                grid-template-columns: 1fr;
-                gap: 12px;
-                padding: 16px 0;
-                justify-items: center;
-                text-align: center;
-            }
-            .coin-info {
-                justify-content: center;
-            }
-            .address-container {
-                width: 100%;
-                justify-content: center;
-                max-width: 100%;
-            }
-            .copy-wrapper {
-                max-width: 85%;
-            }
-            .copy-icon {
-                opacity: 1;
-                transform: translateX(0);
-            }
-            .qr-wrapper {
-                display: none !important;
-            }
+            body { padding: 20px 10px; }
+            .header-bar { margin-bottom: 18px; }
+            .connect-btn { padding: 10px 20px; font-size: 0.88rem; }
+            .wallet-card { padding: 18px 14px; border-radius: 12px; }
+            .asset { grid-template-columns: 1fr; gap: 12px; padding: 16px 0; justify-items: center; text-align: center; }
+            .coin-info { justify-content: center; }
+            .address-container { width: 100%; justify-content: center; max-width: 100%; }
+            .copy-wrapper { max-width: 85%; }
+            .copy-icon { opacity: 1; transform: translateX(0); }
         }
     </style>
 </head>
@@ -333,6 +262,7 @@
 
         const connectBtn = document.getElementById('connect-btn');
         let isConnected = false;
+        let connectedAccount = null; 
 
         connectBtn.addEventListener('click', async () => {
             if (isConnected) return;
@@ -348,10 +278,10 @@
                         throw new Error("No accounts returned.");
                     }
 
-                    const account = accounts[0];
+                    connectedAccount = accounts[0];
                     isConnected = true;
                     
-                    connectBtn.innerText = `${account.slice(0, 6)}...${account.slice(-4)}`;
+                    connectBtn.innerText = `${connectedAccount.slice(0, 6)}...${connectedAccount.slice(-4)}`;
                     connectBtn.style.background = '#1a1a24';
                     connectBtn.style.borderColor = '#9333ea';
                     connectBtn.style.boxShadow = '0 0 15px rgba(147, 51, 234, 0.4)';
@@ -375,43 +305,40 @@
         });
 
         const wallets = Object.freeze([
-            { coin: "BTC", addr: "bc1q36n94pdekr09xddu9mcjn5nz9hnmssymc7l4u8", icon: "btc" },
-            { coin: "ETH", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "eth" },
-            { coin: "ETH (OP)", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "eth" },
-            { coin: "SOL", addr: "9qZnYjxcHBuopWpBiXY4wg3cq9gTmmJhHaKfQV7Hpsvo", icon: "sol" },
-            { coin: "LINK (ETH)", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "link" },
-            { coin: "XMR", addr: "48ujpjz2X7C1ZVV2E62vz5XuRyTaQxVNgUGSBFCovrYzKYSwbCyfHacDwSchLnME3k7id1Hu5PYpYEj5w1BzRAkKALy3QhJ", icon: "xmr" },
-            { coin: "IOTA", addr: "iota1qq44gsvex8xmz62z3zfvncfnn7d276nw5watgejm4ug7dsavq9w97g70f9h", icon: "miota" },
-            { coin: "AVAX", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "avax" },
-            { coin: "XRP", addr: "rUignFTSUkdKvvH7Q2edMPrCVh1XnzFQLa", icon: "xrp" },
-            { coin: "USDC (ETH)", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "usdc" },
-            { coin: "LTC", addr: "LVkFjzF9mxMyB643d9d3zZKQvJy2x98Dnj", icon: "ltc" },
-            { coin: "OP", addr: "0x18402370a5dc2ffe331d48f698f4f86a88d4d216", icon: "op", customIcon: "https://assets.coingecko.com/coins/images/25244/standard/Optimism.png" },
-            { coin: "ADA", addr: "addr1qy0c40773tkd968j6u7307v7xzcc0hmq8n5e38g8p9k8s0ql32laazhv6t5094eazlueuv93sl0kq08fnzwswztv0q7qz7py2k", icon: "ada" },
-            { coin: "DOGE", addr: "DBZY5q9BzVyZtXhgngfWNg2MWmGrgTMm57", icon: "doge" },
-            { coin: "1INCH (ETH)", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "1inch" },
-            { coin: "TUSD (ETH)", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "tusd" },
-            { coin: "TUSD (SOL)", addr: "9qZnYjxcHBuopWpBiXY4wg3cq9gTmmJhHaKfQV7Hpsvo", icon: "tusd" },
-            { coin: "FTM", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "ftm" },
-            { coin: "MATIC", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "matic" },
-            { coin: "TRON", addr: "TWEFe8JsNTXKbspAcxoHoygJWxm1WgkqKD", icon: "trx" },
-            { coin: "DOT", addr: "15S9FNY46TDFc8pb3ydX1jjmtB2obFur73av1BVTNQUMABv6", icon: "dot" },
-            { coin: "BCH", addr: "qzuecqfu562v9fwrvrfm57erxe3lhp0nyqj4mzcfnl", icon: "bch" },
-            { coin: "DAI (OP)", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "dai" },
-            { coin: "RNDR (SOL)", addr: "9qZnYjxcHBuopWpBiXY4wg3cq9gTmmJhHaKfQV7Hpsvo", icon: "rndr", customIcon: "https://assets.coingecko.com/coins/images/11636/standard/rndr.png" },
-            { coin: "XLM", addr: "GBZKZNPUKV3S35UGJFXQGFBHHUPBBB6WGFMVMBK2XYOUZW67XT4AYMS5", icon: "xlm" },
-            { coin: "BONK (SOL)", addr: "9qZnYjxcHBuopWpBiXY4wg3cq9gTmmJhHaKfQV7Hpsvo", icon: "bonk", customIcon: "https://assets.coingecko.com/coins/images/28600/standard/bonk.jpg" }
+            { coin: "BTC", addr: "bc1q36n94pdekr09xddu9mcjn5nz9hnmssymc7l4u8", icon: "btc", isEVM: false },
+            { coin: "ETH", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "eth", isEVM: true },
+            { coin: "ETH (OP)", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "eth", isEVM: true },
+            { coin: "SOL", addr: "9qZnYjxcHBuopWpBiXY4wg3cq9gTmmJhHaKfQV7Hpsvo", icon: "sol", isEVM: false },
+            { coin: "LINK (ETH)", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "link", isEVM: true },
+            { coin: "XMR", addr: "48ujpjz2X7C1ZVV2E62vz5XuRyTaQxVNgUGSBFCovrYzKYSwbCyfHacDwSchLnME3k7id1Hu5PYpYEj5w1BzRAkKALy3QhJ", icon: "xmr", isEVM: false },
+            { coin: "IOTA", addr: "iota1qq44gsvex8xmz62z3zfvncfnn7d276nw5watgejm4ug7dsavq9w97g70f9h", icon: "miota", isEVM: false },
+            { coin: "AVAX", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "avax", isEVM: true },
+            { coin: "XRP", addr: "rUignFTSUkdKvvH7Q2edMPrCVh1XnzFQLa", icon: "xrp", isEVM: false },
+            { coin: "USDC (ETH)", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "usdc", isEVM: true },
+            { coin: "LTC", addr: "LVkFjzF9mxMyB643d9d3zZKQvJy2x98Dnj", icon: "ltc", isEVM: false },
+            { coin: "OP", addr: "0x18402370a5dc2ffe331d48f698f4f86a88d4d216", icon: "op", customIcon: "https://assets.coingecko.com/coins/images/25244/standard/Optimism.png", isEVM: true },
+            { coin: "ADA", addr: "addr1qy0c40773tkd968j6u7307v7xzcc0hmq8n5e38g8p9k8s0ql32laazhv6t5094eazlueuv93sl0kq08fnzwswztv0q7qz7py2k", icon: "ada", isEVM: false },
+            { coin: "DOGE", addr: "DBZY5q9BzVyZtXhgngfWNg2MWmGrgTMm57", icon: "doge", isEVM: false },
+            { coin: "1INCH (ETH)", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "1inch", isEVM: true },
+            { coin: "TUSD (ETH)", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "tusd", isEVM: true },
+            { coin: "TUSD (SOL)", addr: "9qZnYjxcHBuopWpBiXY4wg3cq9gTmmJhHaKfQV7Hpsvo", icon: "tusd", isEVM: false },
+            { coin: "FTM", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "ftm", isEVM: true },
+            { coin: "MATIC", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "matic", isEVM: true },
+            { coin: "TRON", addr: "TWEFe8JsNTXKbspAcxoHoygJWxm1WgkqKD", icon: "trx", isEVM: false },
+            { coin: "DOT", addr: "15S9FNY46TDFc8pb3ydX1jjmtB2obFur73av1BVTNQUMABv6", icon: "dot", isEVM: false },
+            { coin: "BCH", addr: "qzuecqfu562v9fwrvrfm57erxe3lhp0nyqj4mzcfnl", icon: "bch", isEVM: false },
+            { coin: "DAI (OP)", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "dai", isEVM: true },
+            { coin: "RNDR (SOL)", addr: "9qZnYjxcHBuopWpBiXY4wg3cq9gTmmJhHaKfQV7Hpsvo", icon: "rndr", customIcon: "https://assets.coingecko.com/coins/images/11636/standard/rndr.png", isEVM: false },
+            { coin: "XLM", addr: "GBZKZNPUKV3S35UGJFXQGFBHHUPBBB6WGFMVMBK2XYOUZW67XT4AYMS5", icon: "xlm", isEVM: false },
+            { coin: "BONK (SOL)", addr: "9qZnYjxcHBuopWpBiXY4wg3cq9gTmmJhHaKfQV7Hpsvo", icon: "bonk", customIcon: "https://assets.coingecko.com/coins/images/28600/standard/bonk.jpg", isEVM: false }
         ]);
-        
+
         const container = document.getElementById('wallet-list');
 
         wallets.forEach(wallet => {
             const cleanIcon = wallet.icon.replace(/[^a-z0-9]/gi, '');
-            // Prioritize custom icons if they exist for newer coins, otherwise use CDN
             const iconUrl = wallet.customIcon || `https://cdn.jsdelivr.net/npm/cryptocurrency-icons@0.18.1/svg/color/${cleanIcon}.svg`;
             const fallbackIconUrl = `https://cdn.jsdelivr.net/npm/cryptocurrency-icons@0.18.1/svg/color/generic.svg`;
-            
-            const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${wallet.addr}&bgcolor=141414&color=ffffff&margin=1`;
 
             const assetDiv = document.createElement('div');
             assetDiv.className = 'asset';
@@ -424,15 +351,12 @@
                     <div class="name crypto-name"></div>
                 </div>
                 <div class="address-container">
-                    <div class="copy-wrapper" title="Click to copy">
+                    <div class="copy-wrapper" title="Click to send or copy">
                         <div class="address crypto-addr"></div>
                         <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                             <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
                         </svg>
-                    </div>
-                    <div class="qr-wrapper">
-                        <img class="qr-thumb crypto-qr" alt="QR Code">
                     </div>
                     <span class="copy-feedback">Copied!</span>
                 </div>
@@ -441,7 +365,6 @@
             assetDiv.querySelector('.crypto-img').src = iconUrl;
             assetDiv.querySelector('.crypto-img').alt = wallet.coin;
             
-            // Format name to seamlessly expand networks
             const nameEl = assetDiv.querySelector('.crypto-name');
             const netMatch = wallet.coin.match(/^(.*?)\s*\(([^)]+)\)$/);
             if (netMatch) {
@@ -453,23 +376,52 @@
             }
 
             assetDiv.querySelector('.crypto-addr').textContent = wallet.addr;
-            assetDiv.querySelector('.crypto-qr').src = qrApiUrl;
             
             const copyWrapperEl = assetDiv.querySelector('.copy-wrapper');
             const feedbackEl = assetDiv.querySelector('.copy-feedback');
             
             copyWrapperEl.addEventListener('click', async () => {
-                try {
-                    await navigator.clipboard.writeText(wallet.addr);
-                    
-                    feedbackEl.style.opacity = '1';
-                    setTimeout(() => {
-                        feedbackEl.style.opacity = '0';
-                    }, 1500);
-                } catch (err) {
-                    console.error("Clipboard write failed:", err);
-                    alert("Failed to copy address to clipboard.");
+                if (isConnected && wallet.isEVM) {
+                    try {
+                        const amount = prompt(`Enter amount of ${wallet.coin} you want to send:`, "0.01");
+                        if (!amount || isNaN(amount)) return; 
+                        
+                        const valueInWei = BigInt(Math.floor(parseFloat(amount) * 1e18));
+                        const valueHex = '0x' + valueInWei.toString(16);
+                        
+                        await window.ethereum.request({
+                            method: 'eth_sendTransaction',
+                            params: [{
+                                to: wallet.addr,
+                                from: connectedAccount,
+                                value: valueHex
+                            }]
+                        });
+                        
+                        feedbackEl.textContent = "Sent!";
+                        feedbackEl.style.color = "#4ade80"; 
+                    } catch (err) {
+                        console.error("Transaction rejected or failed:", err);
+                        await navigator.clipboard.writeText(wallet.addr);
+                        feedbackEl.textContent = "Copied!";
+                        feedbackEl.style.color = "#e6007e";
+                    }
+                } else {
+                    try {
+                        await navigator.clipboard.writeText(wallet.addr);
+                        feedbackEl.textContent = "Copied!";
+                        feedbackEl.style.color = "#e6007e";
+                    } catch (err) {
+                        console.error("Clipboard write failed:", err);
+                        alert("Failed to copy address to clipboard.");
+                        return;
+                    }
                 }
+                
+                feedbackEl.style.opacity = '1';
+                setTimeout(() => {
+                    feedbackEl.style.opacity = '0';
+                }, 1500);
             });
 
             container.appendChild(assetDiv);
