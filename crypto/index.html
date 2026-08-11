@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https://cdn.jsdelivr.net data:; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'self' wss: https:;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https://cdn.jsdelivr.net https://api.qrserver.com https://assets.coingecko.com data:; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'self' wss: https:;">
     <meta name="referrer" content="no-referrer">
     <meta http-equiv="X-XSS-Protection" content="1; mode=block">
     <title>Crypto Wallets</title>
@@ -11,15 +11,20 @@
         * {
             box-sizing: border-box;
         }
-        body {
+        html, body {
+            width: 100%;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
             background-color: #000;
             color: #fff;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Helvetica, Arial, sans-serif;
+        }
+        body {
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 60px 20px;
-            margin: 0;
+            padding: 40px 16px;
             min-height: 100vh;
         }
         .header-bar {
@@ -27,7 +32,7 @@
             max-width: 860px;
             display: flex;
             justify-content: flex-end;
-            margin-bottom: 32px;
+            margin-bottom: 24px;
         }
         
         .connect-btn {
@@ -48,6 +53,7 @@
             display: flex;
             align-items: center;
             letter-spacing: 0.5px;
+            white-space: nowrap;
         }
 
         .connect-btn:disabled {
@@ -92,7 +98,7 @@
         .wallet-card {
             border: 2px solid rgba(255, 255, 255, 0.8);
             border-radius: 16px;
-            padding: 36px 40px;
+            padding: 28px 28px;
             max-width: 860px;
             width: 100%;
             background-color: #080808;
@@ -101,11 +107,12 @@
 
         .asset {
             display: grid;
-            grid-template-columns: 200px 1fr;
+            grid-template-columns: 220px 1fr;
             align-items: center;
-            padding: 22px 0;
+            padding: 20px 0;
             border-bottom: 1px solid #1a1a1a;
-            gap: 20px;
+            gap: 16px;
+            min-width: 0;
         }
         .asset:last-child {
             border-bottom: none;
@@ -115,15 +122,17 @@
             padding-top: 0;
         }
 
+        /* Coin Info & Seamless (ETH Network) Expansion */
         .coin-info {
             display: flex;
             align-items: center;
-            gap: 16px;
-            justify-content: flex-start;
+            gap: 14px;
+            min-width: 0;
+            cursor: default;
         }
         .icon {
-            width: 44px;
-            height: 44px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             background-color: #141414;
             display: flex;
@@ -138,6 +147,7 @@
             width: 100%;
             height: 100%;
             object-fit: contain;
+            border-radius: 50%;
         }
         .name {
             font-weight: 600;
@@ -146,23 +156,41 @@
             white-space: nowrap;
         }
 
+        /* Removed colors to perfectly match original plain white bold styling */
+        .net-ext {
+            display: inline-block;
+            max-width: 0;
+            opacity: 0;
+            overflow: hidden;
+            white-space: nowrap;
+            transition: max-width 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease;
+            vertical-align: bottom;
+        }
+
+        .coin-info:hover .net-ext {
+            max-width: 90px;
+            opacity: 1;
+        }
+
+        /* Address Container */
         .address-container {
+            position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 14px;
-            overflow: hidden;
+            gap: 12px;
+            min-width: 0;
         }
 
-        /* Clickable wrapper that reveals the icon on hover */
         .copy-wrapper {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             cursor: pointer;
-            overflow: hidden;
             color: #a0a0a0;
             transition: color 0.2s;
+            min-width: 0;
+            overflow: hidden;
         }
         
         .copy-wrapper:hover {
@@ -171,26 +199,63 @@
 
         .address {
             font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
-            font-size: 0.92rem;
+            font-size: 0.9rem;
             text-align: center;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
+            min-width: 0;
         }
 
         .copy-icon {
-            width: 16px;
-            height: 16px;
+            width: 15px;
+            height: 15px;
             flex-shrink: 0;
             opacity: 0;
-            transform: translateX(-5px);
+            transform: translateX(-4px);
             transition: all 0.2s ease;
         }
 
-        /* Fade in and slide the icon slightly into place when hovering the wrapper */
         .copy-wrapper:hover .copy-icon {
             opacity: 1;
             transform: translateX(0);
+        }
+
+        /* Hidden QR Code Pop-up */
+        .qr-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 0;
+            height: 0;
+        }
+
+        .qr-thumb {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%) scale(0.8);
+            width: 75px;
+            height: 75px;
+            border-radius: 6px;
+            background-color: #141414;
+            border: 1px solid #ff66b2;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.9), 0 0 12px rgba(255, 102, 178, 0.3);
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
+            z-index: 99;
+        }
+
+        /* Triggers QR on desktop hover */
+        @media (hover: hover) {
+            .address-container:hover .qr-thumb {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(-50%) scale(1);
+            }
         }
         
         .copy-feedback {
@@ -200,22 +265,51 @@
             transition: opacity 0.2s ease;
             white-space: nowrap;
             font-weight: 600;
-            width: 55px;
+            width: 50px;
             text-align: left;
+            flex-shrink: 0;
         }
 
+        /* Mobile Layout */
         @media (max-width: 640px) {
+            body {
+                padding: 20px 10px;
+            }
+            .header-bar {
+                margin-bottom: 18px;
+            }
+            .connect-btn {
+                padding: 10px 20px;
+                font-size: 0.88rem;
+            }
+            .wallet-card {
+                padding: 18px 14px;
+                border-radius: 12px;
+            }
             .asset {
                 grid-template-columns: 1fr;
+                gap: 12px;
+                padding: 16px 0;
                 justify-items: center;
+                text-align: center;
             }
             .coin-info {
                 justify-content: center;
             }
-            /* Always show icon on mobile since there is no hover state */
+            .address-container {
+                width: 100%;
+                justify-content: center;
+                max-width: 100%;
+            }
+            .copy-wrapper {
+                max-width: 85%;
+            }
             .copy-icon {
                 opacity: 1;
                 transform: translateX(0);
+            }
+            .qr-wrapper {
+                display: none !important;
             }
         }
     </style>
@@ -232,6 +326,10 @@
 
     <script>
         'use strict';
+
+        function escapeHtml(str) {
+            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+        }
 
         const connectBtn = document.getElementById('connect-btn');
         let isConnected = false;
@@ -279,38 +377,41 @@
         const wallets = Object.freeze([
             { coin: "BTC", addr: "bc1q36n94pdekr09xddu9mcjn5nz9hnmssymc7l4u8", icon: "btc" },
             { coin: "ETH", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "eth" },
-            { coin: "IOTA", addr: "iota1qq44gsvex8xmz62z3zfvncfnn7d276nw5watgejm4ug7dsavq9w97g70f9h", icon: "miota" },
-            { coin: "SOL", addr: "9qZnYjxcHBuopWpBiXY4wg3cq9gTmmJhHaKfQV7Hpsvo", icon: "sol" },
-            { coin: "LTC", addr: "LVkFjzF9mxMyB643d9d3zZKQvJy2x98Dnj", icon: "ltc" },
-            { coin: "OP", addr: "0x18402370a5dc2ffe331d48f698f4f86a88d4d216", icon: "op" },
-            { coin: "XRP", addr: "rUignFTSUkdKvvH7Q2edMPrCVh1XnzFQLa", icon: "xrp" },
-            { coin: "1INCH (ETH)", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "1inch" },
-            { coin: "AVAX", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "avax" },
-            { coin: "TUSD (ETH)", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "tusd" },
             { coin: "ETH (OP)", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "eth" },
-            { coin: "FTM", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "ftm" },
-            { coin: "TRON", addr: "TWEFe8JsNTXKbspAcxoHoygJWxm1WgkqKD", icon: "trx" },
-            { coin: "TUSD (SOL)", addr: "9qZnYjxcHBuopWpBiXY4wg3cq9gTmmJhHaKfQV7Hpsvo", icon: "tusd" },
-            { coin: "ADA", addr: "addr1qy0c40773tkd968j6u7307v7xzcc0hmq8n5e38g8p9k8s0ql32laazhv6t5094eazlueuv93sl0kq08fnzwswztv0q7qz7py2k", icon: "ada" },
+            { coin: "SOL", addr: "9qZnYjxcHBuopWpBiXY4wg3cq9gTmmJhHaKfQV7Hpsvo", icon: "sol" },
             { coin: "LINK (ETH)", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "link" },
+            { coin: "XMR", addr: "48ujpjz2X7C1ZVV2E62vz5XuRyTaQxVNgUGSBFCovrYzKYSwbCyfHacDwSchLnME3k7id1Hu5PYpYEj5w1BzRAkKALy3QhJ", icon: "xmr" },
+            { coin: "IOTA", addr: "iota1qq44gsvex8xmz62z3zfvncfnn7d276nw5watgejm4ug7dsavq9w97g70f9h", icon: "miota" },
+            { coin: "AVAX", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "avax" },
+            { coin: "XRP", addr: "rUignFTSUkdKvvH7Q2edMPrCVh1XnzFQLa", icon: "xrp" },
+            { coin: "USDC (ETH)", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "usdc" },
+            { coin: "LTC", addr: "LVkFjzF9mxMyB643d9d3zZKQvJy2x98Dnj", icon: "ltc" },
+            { coin: "OP", addr: "0x18402370a5dc2ffe331d48f698f4f86a88d4d216", icon: "op", customIcon: "https://assets.coingecko.com/coins/images/25244/standard/Optimism.png" },
+            { coin: "ADA", addr: "addr1qy0c40773tkd968j6u7307v7xzcc0hmq8n5e38g8p9k8s0ql32laazhv6t5094eazlueuv93sl0kq08fnzwswztv0q7qz7py2k", icon: "ada" },
             { coin: "DOGE", addr: "DBZY5q9BzVyZtXhgngfWNg2MWmGrgTMm57", icon: "doge" },
+            { coin: "1INCH (ETH)", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "1inch" },
+            { coin: "TUSD (ETH)", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "tusd" },
+            { coin: "TUSD (SOL)", addr: "9qZnYjxcHBuopWpBiXY4wg3cq9gTmmJhHaKfQV7Hpsvo", icon: "tusd" },
+            { coin: "FTM", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "ftm" },,
+            { coin: "MATIC", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "matic" }
+            { coin: "TRON", addr: "TWEFe8JsNTXKbspAcxoHoygJWxm1WgkqKD", icon: "trx" },
             { coin: "DOT", addr: "15S9FNY46TDFc8pb3ydX1jjmtB2obFur73av1BVTNQUMABv6", icon: "dot" },
             { coin: "BCH", addr: "qzuecqfu562v9fwrvrfm57erxe3lhp0nyqj4mzcfnl", icon: "bch" },
             { coin: "DAI (OP)", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "dai" },
-            { coin: "RNDR (SOL)", addr: "9qZnYjxcHBuopWpBiXY4wg3cq9gTmmJhHaKfQV7Hpsvo", icon: "rndr" },
+            { coin: "RNDR (SOL)", addr: "9qZnYjxcHBuopWpBiXY4wg3cq9gTmmJhHaKfQV7Hpsvo", icon: "rndr", customIcon: "https://assets.coingecko.com/coins/images/11636/standard/rndr.png" },
             { coin: "XLM", addr: "GBZKZNPUKV3S35UGJFXQGFBHHUPBBB6WGFMVMBK2XYOUZW67XT4AYMS5", icon: "xlm" },
-            { coin: "XMR", addr: "48ujpjz2X7C1ZVV2E62vz5XuRyTaQxVNgUGSBFCovrYzKYSwbCyfHacDwSchLnME3k7id1Hu5PYpYEj5w1BzRAkKALy3QhJ", icon: "xmr" },
-            { coin: "BONK (SOL)", addr: "9qZnYjxcHBuopWpBiXY4wg3cq9gTmmJhHaKfQV7Hpsvo", icon: "bonk" },
-            { coin: "MATIC", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "matic" },
-            { coin: "USDC (ETH)", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "usdc" }
+            { coin: "BONK (SOL)", addr: "9qZnYjxcHBuopWpBiXY4wg3cq9gTmmJhHaKfQV7Hpsvo", icon: "bonk", customIcon: "https://assets.coingecko.com/coins/images/28600/standard/bonk.jpg" }
         ]);
 
         const container = document.getElementById('wallet-list');
 
         wallets.forEach(wallet => {
             const cleanIcon = wallet.icon.replace(/[^a-z0-9]/gi, '');
-            const iconUrl = `https://cdn.jsdelivr.net/npm/cryptocurrency-icons@0.18.1/svg/color/${cleanIcon}.svg`;
+            // Prioritize custom icons if they exist for newer coins, otherwise use CDN
+            const iconUrl = wallet.customIcon || `https://cdn.jsdelivr.net/npm/cryptocurrency-icons@0.18.1/svg/color/${cleanIcon}.svg`;
             const fallbackIconUrl = `https://cdn.jsdelivr.net/npm/cryptocurrency-icons@0.18.1/svg/color/generic.svg`;
+            
+            const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${wallet.addr}&bgcolor=141414&color=ffffff&margin=1`;
 
             const assetDiv = document.createElement('div');
             assetDiv.className = 'asset';
@@ -330,14 +431,29 @@
                             <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
                         </svg>
                     </div>
+                    <div class="qr-wrapper">
+                        <img class="qr-thumb crypto-qr" alt="QR Code">
+                    </div>
                     <span class="copy-feedback">Copied!</span>
                 </div>
             `;
             
             assetDiv.querySelector('.crypto-img').src = iconUrl;
             assetDiv.querySelector('.crypto-img').alt = wallet.coin;
-            assetDiv.querySelector('.crypto-name').textContent = wallet.coin;
+            
+            // Format name to seamlessly expand networks
+            const nameEl = assetDiv.querySelector('.crypto-name');
+            const netMatch = wallet.coin.match(/^(.*?)\s*\(([^)]+)\)$/);
+            if (netMatch) {
+                const baseName = netMatch[1];
+                const netName = netMatch[2];
+                nameEl.innerHTML = `${escapeHtml(baseName)} (<span class="net-label">${escapeHtml(netName)}</span><span class="net-ext">&nbsp;Network</span>)`;
+            } else {
+                nameEl.textContent = wallet.coin;
+            }
+
             assetDiv.querySelector('.crypto-addr').textContent = wallet.addr;
+            assetDiv.querySelector('.crypto-qr').src = qrApiUrl;
             
             const copyWrapperEl = assetDiv.querySelector('.copy-wrapper');
             const feedbackEl = assetDiv.querySelector('.copy-feedback');
