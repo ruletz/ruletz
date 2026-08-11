@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https://cdn.jsdelivr.net data:; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'self' wss: https:;">
+    <meta name="referrer" content="no-referrer">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <title>Crypto Wallets</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Helvetica, Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 60px 20px;
+            margin: 0;
+            min-height: 100vh;
+        }
+        .header-bar {
+            width: 100%;
+            max-width: 860px;
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 32px;
+        }
+        
+        .connect-btn {
+            position: relative;
+            background: linear-gradient(135deg, #ff66b2 0%, #e6007e 100%);
+            color: #fff;
+            border: 1px solid #ff99cc;
+            border-radius: 999px;
+            padding: 12px 26px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            overflow: hidden;
+            z-index: 1;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(230, 0, 126, 0.4);
+            display: flex;
+            align-items: center;
+            letter-spacing: 0.5px;
+        }
+
+        .connect-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        .connect-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(270deg, #ff007a, #9333ea, #3b82f6, #ff007a);
+            background-size: 300% 300%;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            animation: uniGradient 4s ease infinite;
+        }
+
+        .connect-btn:not(:disabled):hover {
+            border-color: transparent;
+            box-shadow: 0 0 25px rgba(147, 51, 234, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .connect-btn:not(:disabled):hover::before {
+            opacity: 1;
+        }
+
+        .connect-btn:active {
+            transform: translateY(0);
+        }
+
+        @keyframes uniGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .wallet-card {
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            border-radius: 16px;
+            padding: 36px 40px;
+            max-width: 860px;
+            width: 100%;
+            background-color: #080808;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+        }
+
+        .asset {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            align-items: center;
+            padding: 22px 0;
+            border-bottom: 1px solid #1a1a1a;
+            gap: 20px;
+        }
+        .asset:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        .asset:first-child {
+            padding-top: 0;
+        }
+
+        .coin-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            justify-content: flex-start;
+        }
+        .icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background-color: #141414;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+            overflow: hidden;
+            padding: 5px;
+            border: 1px solid #262626;
+        }
+        .icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .name {
+            font-weight: 600;
+            font-size: 1.05rem;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        .address-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            overflow: hidden;
+        }
+
+        /* Clickable wrapper that reveals the icon on hover */
+        .copy-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            overflow: hidden;
+            color: #a0a0a0;
+            transition: color 0.2s;
+        }
+        
+        .copy-wrapper:hover {
+            color: #ffffff;
+        }
+
+        .address {
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+            font-size: 0.92rem;
+            text-align: center;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .copy-icon {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+            opacity: 0;
+            transform: translateX(-5px);
+            transition: all 0.2s ease;
+        }
+
+        /* Fade in and slide the icon slightly into place when hovering the wrapper */
+        .copy-wrapper:hover .copy-icon {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .copy-feedback {
+            font-size: 0.85rem;
+            color: #e6007e;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            white-space: nowrap;
+            font-weight: 600;
+            width: 55px;
+            text-align: left;
+        }
+
+        @media (max-width: 640px) {
+            .asset {
+                grid-template-columns: 1fr;
+                justify-items: center;
+            }
+            .coin-info {
+                justify-content: center;
+            }
+            /* Always show icon on mobile since there is no hover state */
+            .copy-icon {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-bar">
+        <button id="connect-btn" class="connect-btn">Connect Wallet</button>
+    </div>
+
+    <div class="wallet-card">
+        <div id="wallet-list"></div>
+    </div>
+
+    <script>
+        'use strict';
+
+        const connectBtn = document.getElementById('connect-btn');
+        let isConnected = false;
+
+        connectBtn.addEventListener('click', async () => {
+            if (isConnected) return;
+
+            if (typeof window.ethereum !== 'undefined') {
+                try {
+                    connectBtn.disabled = true;
+                    connectBtn.innerText = "Connecting...";
+
+                    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                    
+                    if (!accounts || accounts.length === 0) {
+                        throw new Error("No accounts returned.");
+                    }
+
+                    const account = accounts[0];
+                    isConnected = true;
+                    
+                    connectBtn.innerText = `${account.slice(0, 6)}...${account.slice(-4)}`;
+                    connectBtn.style.background = '#1a1a24';
+                    connectBtn.style.borderColor = '#9333ea';
+                    connectBtn.style.boxShadow = '0 0 15px rgba(147, 51, 234, 0.4)';
+                    
+                    const style = document.createElement('style');
+                    style.textContent = `.connect-btn::before { display: none !important; }`;
+                    document.head.appendChild(style);
+
+                } catch (error) {
+                    console.error("Wallet connection failed:", error);
+                    alert("Connection request was cancelled or failed. Please try again.");
+                } finally {
+                    if (!isConnected) {
+                        connectBtn.disabled = false;
+                        connectBtn.innerText = "Connect Wallet";
+                    }
+                }
+            } else {
+                alert("No Web3 provider detected. Please install a secure wallet extension like MetaMask.");
+            }
+        });
+
+        const wallets = Object.freeze([
+            { coin: "BTC", addr: "bc1q36n94pdekr09xddu9mcjn5nz9hnmssymc7l4u8", icon: "btc" },
+            { coin: "ETH", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "eth" },
+            { coin: "IOTA", addr: "iota1qq44gsvex8xmz62z3zfvncfnn7d276nw5watgejm4ug7dsavq9w97g70f9h", icon: "miota" },
+            { coin: "SOL", addr: "9qZnYjxcHBuopWpBiXY4wg3cq9gTmmJhHaKfQV7Hpsvo", icon: "sol" },
+            { coin: "LTC", addr: "LVkFjzF9mxMyB643d9d3zZKQvJy2x98Dnj", icon: "ltc" },
+            { coin: "OP", addr: "0x18402370a5dc2ffe331d48f698f4f86a88d4d216", icon: "op" },
+            { coin: "XRP", addr: "rUignFTSUkdKvvH7Q2edMPrCVh1XnzFQLa", icon: "xrp" },
+            { coin: "1INCH (ETH)", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "1inch" },
+            { coin: "AVAX", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "avax" },
+            { coin: "TUSD (ETH)", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "tusd" },
+            { coin: "ETH (OP)", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "eth" },
+            { coin: "FTM", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "ftm" },
+            { coin: "TRON", addr: "TWEFe8JsNTXKbspAcxoHoygJWxm1WgkqKD", icon: "trx" },
+            { coin: "TUSD (SOL)", addr: "9qZnYjxcHBuopWpBiXY4wg3cq9gTmmJhHaKfQV7Hpsvo", icon: "tusd" },
+            { coin: "ADA", addr: "addr1qy0c40773tkd968j6u7307v7xzcc0hmq8n5e38g8p9k8s0ql32laazhv6t5094eazlueuv93sl0kq08fnzwswztv0q7qz7py2k", icon: "ada" },
+            { coin: "LINK (ETH)", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "link" },
+            { coin: "DOGE", addr: "DBZY5q9BzVyZtXhgngfWNg2MWmGrgTMm57", icon: "doge" },
+            { coin: "DOT", addr: "15S9FNY46TDFc8pb3ydX1jjmtB2obFur73av1BVTNQUMABv6", icon: "dot" },
+            { coin: "BCH", addr: "qzuecqfu562v9fwrvrfm57erxe3lhp0nyqj4mzcfnl", icon: "bch" },
+            { coin: "DAI (OP)", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "dai" },
+            { coin: "RNDR (SOL)", addr: "9qZnYjxcHBuopWpBiXY4wg3cq9gTmmJhHaKfQV7Hpsvo", icon: "rndr" },
+            { coin: "XLM", addr: "GBZKZNPUKV3S35UGJFXQGFBHHUPBBB6WGFMVMBK2XYOUZW67XT4AYMS5", icon: "xlm" },
+            { coin: "XMR", addr: "48ujpjz2X7C1ZVV2E62vz5XuRyTaQxVNgUGSBFCovrYzKYSwbCyfHacDwSchLnME3k7id1Hu5PYpYEj5w1BzRAkKALy3QhJ", icon: "xmr" },
+            { coin: "BONK (SOL)", addr: "9qZnYjxcHBuopWpBiXY4wg3cq9gTmmJhHaKfQV7Hpsvo", icon: "bonk" },
+            { coin: "MATIC", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "matic" },
+            { coin: "USDC (ETH)", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "usdc" }
+        ]);
+
+        const container = document.getElementById('wallet-list');
+
+        wallets.forEach(wallet => {
+            const cleanIcon = wallet.icon.replace(/[^a-z0-9]/gi, '');
+            const iconUrl = `https://cdn.jsdelivr.net/npm/cryptocurrency-icons@0.18.1/svg/color/${cleanIcon}.svg`;
+            const fallbackIconUrl = `https://cdn.jsdelivr.net/npm/cryptocurrency-icons@0.18.1/svg/color/generic.svg`;
+
+            const assetDiv = document.createElement('div');
+            assetDiv.className = 'asset';
+            
+            assetDiv.innerHTML = `
+                <div class="coin-info">
+                    <div class="icon">
+                        <img class="crypto-img" alt="" onerror="this.onerror=null; this.src='${fallbackIconUrl}';">
+                    </div>
+                    <div class="name crypto-name"></div>
+                </div>
+                <div class="address-container">
+                    <div class="copy-wrapper" title="Click to copy">
+                        <div class="address crypto-addr"></div>
+                        <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </div>
+                    <span class="copy-feedback">Copied!</span>
+                </div>
+            `;
+            
+            assetDiv.querySelector('.crypto-img').src = iconUrl;
+            assetDiv.querySelector('.crypto-img').alt = wallet.coin;
+            assetDiv.querySelector('.crypto-name').textContent = wallet.coin;
+            assetDiv.querySelector('.crypto-addr').textContent = wallet.addr;
+            
+            const copyWrapperEl = assetDiv.querySelector('.copy-wrapper');
+            const feedbackEl = assetDiv.querySelector('.copy-feedback');
+            
+            copyWrapperEl.addEventListener('click', async () => {
+                try {
+                    await navigator.clipboard.writeText(wallet.addr);
+                    
+                    feedbackEl.style.opacity = '1';
+                    setTimeout(() => {
+                        feedbackEl.style.opacity = '0';
+                    }, 1500);
+                } catch (err) {
+                    console.error("Clipboard write failed:", err);
+                    alert("Failed to copy address to clipboard.");
+                }
+            });
+
+            container.appendChild(assetDiv);
+        });
+    </script>
+</body>
+</html>
