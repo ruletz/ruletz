@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link href="black.ico" rel="icon" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crypto Wallets</title>
     <style>
@@ -25,6 +24,7 @@
             padding: 40px 16px;
             min-height: 100vh;
         }
+        
         .header-bar {
             width: 100%;
             max-width: 860px;
@@ -238,7 +238,7 @@
         
         .copy-feedback {
             font-size: 0.85rem;
-            color: #e6007e;
+            color: #ffffff;
             opacity: 0;
             transition: opacity 0.2s ease;
             white-space: nowrap;
@@ -248,10 +248,183 @@
             flex-shrink: 0;
         }
 
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s ease;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .payment-modal {
+            background: #0d0d0d;
+            border: 1px solid #333;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 400px;
+            padding: 32px 24px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.9), 0 0 20px rgba(230, 0, 126, 0.15);
+            transform: translateY(20px);
+            transition: transform 0.25s ease;
+            text-align: center;
+        }
+
+        .modal-overlay.active .payment-modal {
+            transform: translateY(0);
+        }
+        .modal-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        .modal-header img {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: #141414;
+            padding: 6px;
+            border: 1px solid #262626;
+        }
+        .modal-header h2 {
+            margin: 0;
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+        .modal-price {
+            font-size: 0.9rem;
+            color: #a0a0a0;
+            margin-bottom: 20px;
+            background: #141414;
+            padding: 6px 12px;
+            border-radius: 999px;
+            display: inline-block;
+            transition: color 0.3s;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 8px; 
+        }
+        .input-group input {
+            width: 100%;
+            background: #000;
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 16px 80px 16px 20px;
+            font-size: 1.5rem;
+            color: #fff;
+            outline: none;
+            text-align: left;
+            font-family: inherit;
+            transition: border-color 0.2s;
+        }
+        .input-group input:focus {
+            border-color: #ff66b2;
+        }
+        .input-group input::-webkit-outer-spin-button,
+        .input-group input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        .input-ticker {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-weight: 600;
+            color: #a0a0a0;
+            font-size: 1.1rem;
+        }
+        
+        .preset-amounts {
+            display: flex;
+            gap: 4px;
+            width: 130px;
+            margin-bottom: 20px;
+        }
+        .preset-btn {
+            background: #222;
+            color: #fff;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 8px 0;
+            flex: 1;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .preset-btn:hover {
+            background: #333;
+            border-color: #555;
+        }
+        .preset-btn.selected {
+            border-color: #ff66b2;
+            color: #fff;
+            background: rgba(255, 102, 178, 0.1);
+        }
+
+        .modal-estimation {
+            font-size: 1rem;
+            color: #ff66b2;
+            font-weight: 500;
+            margin-bottom: 20px;
+            min-height: 20px;
+        }
+        .modal-fees {
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 24px;
+            line-height: 1.4;
+        }
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+        }
+        .modal-actions button {
+            flex: 1;
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-cancel {
+            background: transparent;
+            border: 1px solid #333;
+            color: #fff;
+        }
+        .btn-cancel:hover {
+            background: #1a1a1a;
+            border-color: #555;
+        }
+        .btn-confirm {
+            background: linear-gradient(135deg, #ff66b2 0%, #e6007e 100%);
+            border: none;
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(230, 0, 126, 0.4);
+        }
+        .btn-confirm:hover {
+            box-shadow: 0 6px 20px rgba(230, 0, 126, 0.6);
+            transform: translateY(-1px);
+        }
+
         @media (max-width: 640px) {
             body { padding: 20px 10px; }
             .header-bar { margin-bottom: 18px; }
-            .connect-btn { padding: 10px 20px; font-size: 0.88rem; }
+            .connect-btn { padding: 10px 16px; font-size: 0.88rem; min-width: auto; }
             .wallet-card { padding: 18px 14px; border-radius: 12px; }
             .asset { grid-template-columns: 1fr; gap: 12px; padding: 16px 0; justify-items: center; text-align: center; }
             .coin-info { justify-content: center; }
@@ -269,6 +442,35 @@
 
     <div class="wallet-card">
         <div id="wallet-list"></div>
+    </div>
+
+    <div id="payment-modal" class="modal-overlay">
+        <div class="payment-modal">
+            <div class="modal-header">
+                <img id="modal-logo" src="" alt="Token Logo">
+                <h2 id="modal-title">Send ETH</h2>
+            </div>
+            <div class="modal-price" id="modal-price-display">Loading price...</div>
+            
+            <div class="input-group">
+                <input type="number" id="modal-amount-input" placeholder="0.00" step="any" min="0" autocomplete="off">
+                <span class="input-ticker" id="modal-ticker">ETH</span>
+            </div>
+
+            <div class="preset-amounts">
+                <button type="button" class="preset-btn" data-eur="1">1</button>
+                <button type="button" class="preset-btn" data-eur="10">10</button>
+                <button type="button" class="preset-btn" data-eur="100">100</button>
+            </div>
+            
+            <div class="modal-estimation" id="modal-usd-estimation">~ €0.00 EUR</div>
+            <div class="modal-fees">Network and gas fees will be calculated by your wallet.</div>
+            
+            <div class="modal-actions">
+                <button id="modal-cancel-btn" class="btn-cancel">Cancel</button>
+                <button id="modal-send-btn" class="btn-confirm">Proceed</button>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -336,32 +538,129 @@
 
         const wallets = Object.freeze([
             { coin: "BTC", addr: "bc1q36n94pdekr09xddu9mcjn5nz9hnmssymc7l4u8", icon: "btc", isEVM: false },
-            { coin: "ETH", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "eth", isEVM: true, chainId: "0x1" },
-            { coin: "ETH (OP)", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "eth", isEVM: true, chainId: "0xa" },
+            { coin: "ETH", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "eth", isEVM: true, chainId: "0x1", cgId: "ethereum" },
+            { coin: "ETH (OP)", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "eth", isEVM: true, chainId: "0xa", cgId: "ethereum" },
             { coin: "SOL", addr: "9qZnYjxcHBuopWpBiXY4wg3cq9gTmmJhHaKfQV7Hpsvo", icon: "sol", isEVM: false },
-            { coin: "LINK (ETH)", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "link", isEVM: true, chainId: "0x1" },
+            { coin: "LINK (ETH)", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "link", isEVM: true, chainId: "0x1", cgId: "chainlink" },
             { coin: "XMR", addr: "48ujpjz2X7C1ZVV2E62vz5XuRyTaQxVNgUGSBFCovrYzKYSwbCyfHacDwSchLnME3k7id1Hu5PYpYEj5w1BzRAkKALy3QhJ", icon: "xmr", isEVM: false },
             { coin: "IOTA", addr: "iota1qq44gsvex8xmz62z3zfvncfnn7d276nw5watgejm4ug7dsavq9w97g70f9h", icon: "miota", isEVM: false },
-            { coin: "AVAX", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "avax", isEVM: true, chainId: "0xa86a" },
+            { coin: "AVAX", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "avax", isEVM: true, chainId: "0xa86a", cgId: "avalanche-2" },
             { coin: "XRP", addr: "rUignFTSUkdKvvH7Q2edMPrCVh1XnzFQLa", icon: "xrp", isEVM: false },
-            { coin: "USDC (ETH)", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "usdc", isEVM: true, chainId: "0x1" },
+            { coin: "USDC (ETH)", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "usdc", isEVM: true, chainId: "0x1", cgId: "usd-coin" },
             { coin: "LTC", addr: "LVkFjzF9mxMyB643d9d3zZKQvJy2x98Dnj", icon: "ltc", isEVM: false },
-            { coin: "OP", addr: "0x18402370a5dc2ffe331d48f698f4f86a88d4d216", icon: "op", customIcon: "https://assets.coingecko.com/coins/images/25244/standard/Optimism.png", isEVM: true, chainId: "0xa" },
+            { coin: "OP", addr: "0x18402370a5dc2ffe331d48f698f4f86a88d4d216", icon: "op", customIcon: "https://assets.coingecko.com/coins/images/25244/standard/Optimism.png", isEVM: true, chainId: "0xa", cgId: "optimism" },
             { coin: "ADA", addr: "addr1qy0c40773tkd968j6u7307v7xzcc0hmq8n5e38g8p9k8s0ql32laazhv6t5094eazlueuv93sl0kq08fnzwswztv0q7qz7py2k", icon: "ada", isEVM: false },
             { coin: "DOGE", addr: "DBZY5q9BzVyZtXhgngfWNg2MWmGrgTMm57", icon: "doge", isEVM: false },
-            { coin: "1INCH (ETH)", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "1inch", isEVM: true, chainId: "0x1" },
-            { coin: "TUSD (ETH)", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "tusd", isEVM: true, chainId: "0x1" },
+            { coin: "1INCH (ETH)", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "1inch", isEVM: true, chainId: "0x1", cgId: "1inch" },
+            { coin: "TUSD (ETH)", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "tusd", isEVM: true, chainId: "0x1", cgId: "true-usd" },
             { coin: "TUSD (SOL)", addr: "9qZnYjxcHBuopWpBiXY4wg3cq9gTmmJhHaKfQV7Hpsvo", icon: "tusd", isEVM: false },
-            { coin: "FTM", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "ftm", isEVM: true, chainId: "0xfa" },
-            { coin: "MATIC", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "matic", isEVM: true, chainId: "0x89" },
+            { coin: "FTM", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "ftm", isEVM: true, chainId: "0xfa", cgId: "fantom" },
+            { coin: "MATIC", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "matic", isEVM: true, chainId: "0x89", cgId: "matic-network" },
             { coin: "TRON", addr: "TWEFe8JsNTXKbspAcxoHoygJWxm1WgkqKD", icon: "trx", isEVM: false },
             { coin: "DOT", addr: "15S9FNY46TDFc8pb3ydX1jjmtB2obFur73av1BVTNQUMABv6", icon: "dot", isEVM: false },
             { coin: "BCH", addr: "qzuecqfu562v9fwrvrfm57erxe3lhp0nyqj4mzcfnl", icon: "bch", isEVM: false },
-            { coin: "DAI (OP)", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "dai", isEVM: true, chainId: "0xa" },
+            { coin: "DAI (OP)", addr: "0x8ebc4f3B0eA584A8e2A7D6150014C88DBCB52f88", icon: "dai", isEVM: true, chainId: "0xa", cgId: "dai" },
             { coin: "RNDR (SOL)", addr: "9qZnYjxcHBuopWpBiXY4wg3cq9gTmmJhHaKfQV7Hpsvo", icon: "rndr", customIcon: "https://assets.coingecko.com/coins/images/11636/standard/rndr.png", isEVM: false },
             { coin: "XLM", addr: "GBZKZNPUKV3S35UGJFXQGFBHHUPBBB6WGFMVMBK2XYOUZW67XT4AYMS5", icon: "xlm", isEVM: false },
             { coin: "BONK (SOL)", addr: "9qZnYjxcHBuopWpBiXY4wg3cq9gTmmJhHaKfQV7Hpsvo", icon: "bonk", customIcon: "https://assets.coingecko.com/coins/images/28600/standard/bonk.jpg", isEVM: false }
         ]);
+
+        function requestPaymentAmount(wallet, iconUrl) {
+            return new Promise((resolve, reject) => {
+                const modal = document.getElementById('payment-modal');
+                const titleEl = document.getElementById('modal-title');
+                const logoEl = document.getElementById('modal-logo');
+                const priceEl = document.getElementById('modal-price-display');
+                const inputEl = document.getElementById('modal-amount-input');
+                const tickerEl = document.getElementById('modal-ticker');
+                const estimationEl = document.getElementById('modal-usd-estimation');
+                const sendBtn = document.getElementById('modal-send-btn');
+                const cancelBtn = document.getElementById('modal-cancel-btn');
+                const presetBtns = modal.querySelectorAll('.preset-btn');
+                
+                const baseTicker = wallet.coin.match(/^(.*?)(?:\s*\(.*\))?$/)[1].trim();
+
+                inputEl.value = '';
+                estimationEl.textContent = '~ €0.00 EUR';
+                titleEl.textContent = `Send ${baseTicker}`;
+                tickerEl.textContent = baseTicker;
+                logoEl.src = iconUrl;
+                priceEl.textContent = 'Loading price...';
+                presetBtns.forEach(btn => btn.classList.remove('selected'));
+                
+                let currentTokenPrice = 0;
+
+                if (wallet.cgId) {
+                    fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${wallet.cgId}&vs_currencies=eur`)
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data[wallet.cgId] && data[wallet.cgId].eur) {
+                                currentTokenPrice = data[wallet.cgId].eur;
+                                priceEl.textContent = `Current Price: €${currentTokenPrice.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 4})}`;
+                            } else {
+                                priceEl.textContent = 'Price data unavailable';
+                            }
+                        })
+                        .catch(err => {
+                            priceEl.textContent = 'Price data unavailable';
+                        });
+                } else {
+                    priceEl.textContent = 'Price data unavailable';
+                }
+
+                inputEl.addEventListener('input', () => {
+                    const val = parseFloat(inputEl.value);
+                    if (!isNaN(val) && currentTokenPrice > 0) {
+                        const estimatedEur = val * currentTokenPrice;
+                        estimationEl.textContent = `~ €${estimatedEur.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} EUR`;
+                    } else {
+                        estimationEl.textContent = '~ €0.00 EUR';
+                    }
+                    
+                    presetBtns.forEach(btn => btn.classList.remove('selected'));
+                });
+
+                presetBtns.forEach(btn => {
+                    btn.onclick = () => {
+                        if (currentTokenPrice > 0) {
+                            const eurTarget = parseFloat(btn.getAttribute('data-eur'));
+                            const tokenEquivalent = eurTarget / currentTokenPrice;
+                            
+                            inputEl.value = parseFloat(tokenEquivalent.toFixed(6));
+                            inputEl.dispatchEvent(new Event('input'));
+                            
+                            btn.classList.add('selected');
+                        } else {
+                            priceEl.style.color = '#ef4444';
+                            setTimeout(() => priceEl.style.color = '#a0a0a0', 500);
+                        }
+                    };
+                });
+
+                modal.classList.add('active');
+                inputEl.focus();
+
+                const cleanup = () => {
+                    modal.classList.remove('active');
+                    sendBtn.onclick = null;
+                    cancelBtn.onclick = null;
+                    presetBtns.forEach(btn => btn.onclick = null);
+                };
+
+                sendBtn.onclick = () => {
+                    const amount = parseFloat(inputEl.value);
+                    if (amount > 0) {
+                        cleanup();
+                        resolve(amount.toString());
+                    }
+                };
+
+                cancelBtn.onclick = () => {
+                    cleanup();
+                    reject('User cancelled payment input.');
+                };
+            });
+        }
 
         const container = document.getElementById('wallet-list');
 
@@ -426,8 +725,7 @@
                             throw switchError; 
                         }
 
-                        const amount = prompt(`Enter amount of ${wallet.coin} you want to send:`, "0.01");
-                        if (!amount || isNaN(amount)) return; 
+                        const amount = await requestPaymentAmount(wallet, iconUrl);
                         
                         const valueInWei = BigInt(Math.floor(parseFloat(amount) * 1e18));
                         const valueHex = '0x' + valueInWei.toString(16);
@@ -445,15 +743,19 @@
                         feedbackEl.style.color = "#4ade80"; 
                     } catch (err) {
                         console.error("Action rejected or failed:", err);
-                        await navigator.clipboard.writeText(wallet.addr);
-                        feedbackEl.textContent = "Copied!";
-                        feedbackEl.style.color = "#e6007e";
+                        if (err !== 'User cancelled payment input.') {
+                            await navigator.clipboard.writeText(wallet.addr);
+                            feedbackEl.textContent = "Copied!";
+                            feedbackEl.style.color = "#ffffff";
+                        } else {
+                            return; 
+                        }
                     }
                 } else {
                     try {
                         await navigator.clipboard.writeText(wallet.addr);
                         feedbackEl.textContent = "Copied!";
-                        feedbackEl.style.color = "#e6007e";
+                        feedbackEl.style.color = "#ffffff";
                     } catch (err) {
                         console.error("Clipboard write failed:", err);
                         alert("Failed to copy address to clipboard.");
